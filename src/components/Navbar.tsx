@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Terminal, Home, User, Briefcase, Mail, Download } from 'lucide-react';
+import { Menu, X, Terminal, Home, User, Briefcase, Mail, Download, Code } from 'lucide-react';
 
 interface NavItem {
   path: string;
@@ -18,6 +18,7 @@ const Navbar: React.FC = () => {
     { path: '/', label: 'Home', icon: <Home size={18} /> },
     { path: '/about', label: 'About', icon: <User size={18} /> },
     { path: '/projects', label: 'Projects', icon: <Briefcase size={18} /> },
+    { path: '/skillverse', label: 'Skillverse', icon: <Code size={18} /> },
     { path: '/contact', label: 'Contact', icon: <Mail size={18} /> },
   ];
 

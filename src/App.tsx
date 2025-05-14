@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Projects from './pages/Projects';
 import Contact from './pages/Contact';
+import SkillversePage from './pages/Skillverse';
 import './index.css';
 
 // Wrapper component for AnimatePresence to access location
@@ -93,6 +94,19 @@ const AnimatedRoutes = () => {
               exit="exit"
             >
               <Contact />
+            </motion.div>
+          } 
+        />
+        <Route 
+          path="/skillverse" 
+          element={
+            <motion.div
+              variants={pageVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+            >
+              <SkillversePage />
             </motion.div>
           } 
         />

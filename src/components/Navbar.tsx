@@ -40,7 +40,7 @@ const Navbar: React.FC = () => {
 
   // Handle resume download
   const handleResumeDownload = () => {
-    window.open('/resume/Sarthak_Sethi_Resume.pdf', '_blank');
+    window.open('/assets/Sarthak%20Sethi%20Cv.pdf', '_blank');
   };
 
   return (

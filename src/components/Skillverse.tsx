@@ -33,14 +33,13 @@ const Skillverse: React.FC = () => {
   const [supernovaIdx, setSupernovaIdx] = useState<number | null>(null);
   const [easterEgg, setEasterEgg] = useState(false);
   const [hovered, setHovered] = useState<number | null>(null);
-  const [orbitAngles, setOrbitAngles] = useState<number[]>(() => skills.map(() => getRandom(0, 360)));
+  const [baseAngle, setBaseAngle] = useState(0);
   const requestRef = useRef<number>();
 
-  // Animate orbits smoothly
+  // Animate base angle for smooth rotation
   useEffect(() => {
-    const speeds = skills.map((_, i) => getRandom(0.12, 0.32) * (i % 2 === 0 ? 1 : -1));
     const animate = () => {
-      setOrbitAngles(prev => prev.map((a, i) => (a + speeds[i]) % 360));
+      setBaseAngle(prev => (prev + 0.18) % 360);
       requestRef.current = requestAnimationFrame(animate);
     };
     requestRef.current = requestAnimationFrame(animate);
@@ -57,7 +56,7 @@ const Skillverse: React.FC = () => {
   }, []);
 
   // SVG center
-  const cx = 250, cy = 250, sunRadius = 38, orbitBase = 70, orbitStep = 22;
+  const cx = 250, cy = 250, sunRadius = 38, orbitBase = 90, orbitStep = 18;
 
   return (
     <div style={{ background: 'radial-gradient(ellipse at center, #181a20 60%, #101116 100%)', borderRadius: 20, boxShadow: '0 0 32px #00f2fe33', margin: '2rem auto', maxWidth: 520, padding: 24, position: 'relative' }}>
@@ -85,7 +84,8 @@ const Skillverse: React.FC = () => {
         </g>
         {/* Planets (Skills) */}
         {skills.map((skill, i) => {
-          const angle = orbitAngles[i];
+          // Evenly space planets
+          const angle = baseAngle + (360 / skills.length) * i;
           const rad = (angle * Math.PI) / 180;
           const r = orbitBase + orbitStep * (i % 6);
           const x = cx + r * Math.cos(rad);
@@ -111,16 +111,34 @@ const Skillverse: React.FC = () => {
                 onMouseEnter={() => setHovered(i)}
                 onMouseLeave={() => setHovered(null)}
               />
-              {/* Skill label on hover */}
+              {/* Skill name wraps around the planet on hover */}
               {hovered === i && (
                 <g>
-                  <rect x={x - 48} y={y - 38} width={96} height={28} rx={8} fill="#181a20ee" stroke={skill.color} strokeWidth={1.5} />
-                  <text x={x} y={y - 20} textAnchor="middle" fontSize={13} fill="#fff" fontWeight="bold">{skill.name}</text>
+                  <defs>
+                    <path id={`circlePath${i}`} d={`M ${x} ${y} m -20,0 a 20,20 0 1,1 40,0 a 20,20 0 1,1 -40,0`} />
+                  </defs>
+                  <text fontSize={12} fill={skill.color} fontWeight="bold">
+                    <textPath href={`#circlePath${i}`} startOffset="25%">
+                      {skill.name} • {skill.name}
+                    </textPath>
+                  </text>
                 </g>
               )}
-              {/* Supernova burst */}
+              {/* Supernova burst: radiating lines */}
               {isSupernova && (
                 <g>
+                  {[...Array(12)].map((_, j) => {
+                    const blastAngle = (360 / 12) * j;
+                    const blastRad = (blastAngle * Math.PI) / 180;
+                    const blastLen = 38 + 18 * Math.sin(Date.now() / 120);
+                    const bx1 = x + Math.cos(blastRad) * 0;
+                    const by1 = y + Math.sin(blastRad) * 0;
+                    const bx2 = x + Math.cos(blastRad) * blastLen;
+                    const by2 = y + Math.sin(blastRad) * blastLen;
+                    return (
+                      <line key={j} x1={bx1} y1={by1} x2={bx2} y2={by2} stroke="#8f00ff" strokeWidth={3} opacity={0.7} />
+                    );
+                  })}
                   <circle cx={x} cy={y} r={48} fill="#fff" opacity={0.22} />
                   <text x={x} y={y + 5} textAnchor="middle" fontSize={28} fill="#8f00ff" fontWeight="bold">💥</text>
                 </g>

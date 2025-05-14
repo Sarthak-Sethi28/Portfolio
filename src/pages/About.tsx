@@ -52,7 +52,6 @@ const About = () => {
     { category: 'Backend', items: ['Node.js', 'Express.js', 'Python', 'Django', 'REST APIs'] },
     { category: 'Database', items: ['MongoDB', 'PostgreSQL', 'MySQL'] },
     { category: 'DevOps', items: ['Docker', 'Git', 'GitHub Actions', 'AWS', 'Vercel'] },
-    { category: 'Tools', items: ['VS Code', 'Postman', 'Figma', 'Jira', 'Confluence'] }
   ];
 
   const education = {
@@ -79,6 +78,17 @@ const About = () => {
         >
           About Me
         </motion.h1>
+
+        {/* Skillverse Section */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="mb-12"
+        >
+          <h2 className="text-3xl font-bold text-cyber-accent mb-4 text-center">Skillverse: My Skills Universe</h2>
+          <Skillverse />
+        </motion.section>
 
         {/* Education Section */}
         <motion.section 
@@ -169,9 +179,6 @@ const About = () => {
             ))}
           </div>
         </motion.section>
-
-        {/* Unique Skillverse Visualization */}
-        <Skillverse />
 
         {/* Skills Section */}
         <motion.section

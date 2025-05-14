@@ -92,7 +92,6 @@ const About = () => {
               <span className="text-gray-400">{education.period}</span>
             </div>
             <p className="text-gray-300 mb-2">{education.degree}</p>
-            <p className="text-gray-400">Hobbies: Sports (Badminton, Basketball, Volleyball), using new technology, making projects</p>
           </motion.div>
         </motion.section>
 

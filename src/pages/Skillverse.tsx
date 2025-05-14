@@ -1,5 +1,5 @@
 import React from 'react';
-import SkillConstellation from '../components/SkillConstellation';
+import SkillWaterfall from '../components/SkillWaterfall';
 
 const SkillversePage: React.FC = () => (
   <div className="min-h-screen py-20">
@@ -7,7 +7,7 @@ const SkillversePage: React.FC = () => (
       <h1 className="text-4xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600 text-center">
         Skillverse: My Skills Universe
       </h1>
-      <SkillConstellation />
+      <SkillWaterfall />
     </div>
   </div>
 );

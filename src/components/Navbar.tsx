@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Terminal, Home, User, Briefcase, Mail, Download } from 'lucide-react';
-// @ts-ignore
-import Resume from '../assets/Sarthak Sethi Cv.pdf';
 
 interface NavItem {
   path: string;
@@ -41,7 +39,7 @@ const Navbar: React.FC = () => {
 
   // Handle resume download
   const handleResumeDownload = () => {
-    window.open(Resume, '_blank');
+    window.open('/Sarthak Sethi Cv.pdf', '_blank');
   };
 
   return (

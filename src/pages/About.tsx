@@ -61,27 +61,6 @@ const About = () => {
     awards: ''
   };
 
-  const skillTabs = [
-    { id: 'languages', label: 'Languages', icon: <Code size={18} /> },
-    { id: 'frameworks', label: 'Frameworks & Tools', icon: <Briefcase size={18} /> },
-    { id: 'concepts', label: 'Concepts', icon: <GraduationCap size={18} /> },
-  ];
-
-  const skillsList = {
-    languages: skills.languages.split(', ').map(skill => ({
-      name: skill,
-      level: Math.random() * 30 + 70 // Random proficiency between 70-100%
-    })),
-    frameworks: skills.frameworks.split(', ').map(skill => ({
-      name: skill,
-      level: Math.random() * 30 + 70
-    })),
-    concepts: skills.concepts.split(', ').map(skill => ({
-      name: skill,
-      level: Math.random() * 30 + 70
-    }))
-  };
-
   return (
     <div className="min-h-screen py-20">
       <motion.div
@@ -200,49 +179,18 @@ const About = () => {
             <h2 className="text-2xl font-bold text-white">Skills</h2>
           </div>
           <div className="bg-gray-800/50 rounded-lg p-6 space-y-4">
-            <div className="flex space-x-2 mb-6">
-              {skillTabs.map(tab => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveSkillTab(tab.id)}
-                  className={`flex items-center px-4 py-2 rounded-md transition-all duration-300
-                             ${activeSkillTab === tab.id 
-                               ? 'bg-cyber-accent text-white' 
-                               : 'bg-gray-700/50 text-gray-400 hover:text-white'}`}
-                >
-                  {tab.icon}
-                  <span className="ml-2">{tab.label}</span>
-                </button>
-              ))}
-            </div>
-            
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeSkillTab}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.3 }}
-                className="space-y-4"
-              >
-                {skillsList[activeSkillTab as keyof typeof skillsList].map((skill, index) => (
-                  <div key={skill.name} className="space-y-2">
-                    <div className="flex justify-between">
-                      <span className="text-gray-300">{skill.name}</span>
-                      <span className="text-gray-400">{Math.round(skill.level)}%</span>
-                    </div>
-                    <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={{ width: `${skill.level}%` }}
-                        transition={{ duration: 0.5, delay: index * 0.1 }}
-                        className="h-full bg-gradient-to-r from-blue-400 to-purple-600"
-                      />
-                    </div>
-                  </div>
-                ))}
-              </motion.div>
-            </AnimatePresence>
+            {skills.map((skill, idx) => (
+              <div key={skill.category} className="mb-4">
+                <h3 className="text-lg font-semibold text-cyber-accent mb-2">{skill.category}</h3>
+                <div className="flex flex-wrap gap-2">
+                  {skill.items.map((item) => (
+                    <span key={item} className="bg-cyber-dark px-3 py-1 rounded-full text-gray-300 text-sm border border-cyber-accent/30">
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
         </motion.section>
       </motion.div>

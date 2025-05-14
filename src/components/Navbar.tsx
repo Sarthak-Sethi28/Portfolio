@@ -3,7 +3,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Terminal, Home, User, Briefcase, Mail, Download } from 'lucide-react';
 // @ts-ignore
-import Resume from '../assets/Sarthak Resume.pdf';
+import Resume from '../assets/Sarthak Sethi Cv.pdf';
 
 interface NavItem {
   path: string;

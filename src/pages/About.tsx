@@ -9,24 +9,25 @@ const About = () => {
   const experiences = [
     {
       company: 'Prompt Solutions India',
-      role: 'Front-End Lead',
+      role: 'Front-End Developer',
       period: 'Aug 2023 – Jul 2024',
       points: [
-        'Built a comprehensive, HIPAA-compliant healthcare platform integrating hospital locations, emergency services, and online consultations for thousands of users.',
-        'Architected a microservices backend on AWS EC2, RDS, S3  using Python (Flask) and implemented CI/CD pipelines with Jenkins.',
-        'Developed the front end with React (web) and Kotlin (Android), leveraging Redux for state management and Firebase for real-time notifications.',
-        'Launched the platform with 10,000+ user sign-ups in the first month, improving emergency response efficiency by 30%.'
+        'Built a HIPAA-compliant healthcare platform integrating hospital locations, emergency services, and online consultations for thousands of users.',
+        'Developed the front end (web) using React, leveraging Redux using JavaScript for state management.',
+        'Managed and developed a microservices backend using Python (Flask) hosted on AWS EC2 for scalable healthcare services.',
+        'Worked in a cross-functional team of 5 developers, ensuring on-time delivery and stakeholder satisfaction.',
+        'Launched with 5000+ user sign-ups, improving emergency response efficiency by 32%.'
       ]
     },
     {
       company: 'Nokia India',
       role: 'Software Engineer Co-op',
-      period: 'June 2023 – July 2023',
+      period: 'Jun 2023 – Jul 2023',
       points: [
         'Modernized an outdated bug tracking system to reduce duplicate efforts and improve resolution times.',
-        'Revamped the system using Node.js and Express, optimizing PostgreSQL queries to boost performance by 40%.',
-        'Created custom React dashboards with D3.js for real-time analytics and deployed the solution via Docker and Kubernetes.',
-        'Implemented automated triaging and enhanced search, reducing duplicate tickets by 40%.'
+        'Revamped using Node.js and Express, optimizing PostgreSQL queries to boost performance by 47%.',
+        'Created custom React dashboards with D3.js for real-time analytics and deployed via Docker.',
+        'Integrated unit testing with Jest, achieving 63% code coverage and reducing bug recurrence.'
       ]
     },
     {
@@ -34,26 +35,28 @@ const About = () => {
       role: 'Digital Marketing Analyst',
       period: 'Oct 2022 – Dec 2022',
       points: [
-        'Leveraged A/B testing to boost brand visibility and user engagement through creative digital solutions.',
-        'Designed and developed interactive web assets using HTML/CSS and JavaScript.',
-        'Optimized website performance through responsive design principles and cross-browser compatibility.',
-        'Leveraged SEO and analytics tools to optimize digital campaigns.'
+        'Ran A/B tests on landing pages and ad creatives; evaluated performance using CTR and bounce rate metrics.',
+        'Built static campaign pages using HTML, CSS, and JavaScript; maintained brand styling consistency.',
+        'Implemented on-page SEO (title tags, meta descriptions, heading structure) using keyword research.',
+        'Used Google Analytics to track traffic sources, user behavior, and session durations.',
+        'Managed content delivery via Meta Business Suite and Canva; scheduled promotional assets for Instagram and Facebook.',
+        'Generated monthly analytics reports with traffic summaries and visualized KPIs using Google Sheets and Charts.'
       ]
     }
   ];
 
   const skills = {
-    languages: 'Kotlin, Python, C/C++, HTML/CSS, JavaScript, SQL MySQL, PostgreSQL',
-    frameworks: 'React, Node.js, Flask, Docker, Kubernetes, AWS EC2, RDS, S3, Lambda, Firebase, Jenkins',
-    concepts: 'Microservices, RESTful APIs, Cloud Deployment, Agile, SDLC, TDD, CI/CD'
+    languages: 'Python, Kotlin, C/C++, R, JavaScript, SQL, HTML/CSS',
+    frameworks: 'React, Node.js, Flask, Github API, REST API, OpenAI API',
+    concepts: 'AWS (EC2, S3), Docker, Jest, MySQL, PostgreSQL, Git, Figma, Canva, Power BI, Cursor, Pear AI'
   };
 
   const education = {
     university: 'University of Waterloo',
-    degree: 'Bachelor of Computer Science',
-    period: 'Sep 2024 – Present',
-    courses: 'Data Structures & Algorithms, Operating Systems, Optimization, Functional Programming',
-    awards: "President's Scholarship of Distinction"
+    degree: 'Honours Bachelor of Computer Science',
+    period: 'Sep 2024 – May 2029',
+    courses: '',
+    awards: ''
   };
 
   const skillTabs = [

@@ -8,49 +8,60 @@ const Projects = () => {
 
   const projects = [
     {
-      title: 'GIM - Gesture Interactive Mouse',
-      period: 'Jan 2024 – Apr 2024',
-      description: 'An innovative computer vision-based system that enables hands-free mouse control through gesture recognition.',
-      technologies: ['Python', 'OpenCV', 'MediaPipe', 'Machine Learning'],
+      title: 'Personal Portfolio Website',
+      period: '',
+      description: 'A responsive portfolio website built with React.js, HTML, CSS, and JavaScript to showcase projects.',
+      technologies: ['React.js', 'HTML', 'CSS', 'JavaScript'],
       points: [
-        'Engineered a real-time gesture recognition system using OpenCV and MediaPipe for hands-free mouse control.',
-        'Implemented advanced hand tracking algorithms to detect and interpret 21 hand landmarks for precise gesture mapping.',
-        'Developed custom gesture patterns for common mouse actions like click, drag, scroll, and cursor movement.',
-        'Optimized performance using parallel processing, achieving <50ms latency for smooth real-time interaction.',
-        'Created an intuitive calibration system to adapt to different user environments and lighting conditions.'
+        'Built a responsive portfolio website with React.js, HTML, CSS, and JavaScript to showcase projects.',
+        'Designed a dynamic user interface with component-based architecture for cross-device compatibility.',
+        'Integrated SEO optimization, increasing website visibility and reducing load times.',
+        'Implemented interactive project showcases to highlight technical expertise and personal branding.'
       ],
-      demoUrl: 'https://github.com/Sarthak-Sethi28/GIM',
-      imageUrl: '/projects/gim.png'
+      demoUrl: '',
+      imageUrl: ''
     },
     {
-      title: 'CarRaksha – Safe Driving System',
-      period: 'Mar 2023 – Aug 2023',
-      description: 'A real-time vehicle safety system built with C++ and Arduino, promoting safer driving through automated interventions.',
-      technologies: ['C++', 'Arduino', 'Sensors', 'Image Processing'],
+      title: 'GIM - Guard in Motion',
+      period: '',
+      description: 'A wearable safety device for women integrating GPS, motion sensors, mic, and camera for real-time protection.',
+      technologies: ['Python', 'ML'],
       points: [
-        'Developed a real-time vehicle safety system in C++ on Arduino promoting safer driving through automated interventions.',
-        'Integrated an MQ-3 alcohol sensor and ultrasonic sensors for collision prevention, enabling automatic stops under risky conditions.',
-        'Programmed a speed sensor to monitor and cap vehicle velocity, reducing accident rates by 15%.',
-        'Implemented a camera module with image processing for drowsiness detection, increasing driver alertness by 20%.',
-        'Engineered a sensor interface module to decouple hardware and processing, enabling plug-and-play sensor integration.'
+        'Designed a extfwearable safety device for women integrating extfGPS, motion sensors, mic, and camera to ensure real-time protection.',
+        'Built a extfbone-touch activation system for live audio-video streaming to the cloud and emergency alerts to trusted contacts.',
+        'Integrated extfbmotion and gyro sensors for auto-triggered recording on sudden impact or abnormal movement.',
+        'Engineered the backend with extfbsecure cloud storage, audio/video encoding, and real-time location tracking.',
+        'Collaborated on mobile app integration to manage contacts, view alerts, and enhance user control.'
       ],
-      demoUrl: 'https://github.com/Sarthak-Sethi28/CaRaksha',
-      imageUrl: '/projects/carraksha.png'
+      demoUrl: '',
+      imageUrl: ''
     },
     {
-      title: 'iMoney – Product Strategy & Marketing',
-      period: 'Oct 2022 – Jan 2023',
-      description: 'A Python and OpenCV-based solution for banknote validation and analysis.',
-      technologies: ['Python', 'OpenCV', 'SQL', 'ETL Pipeline'],
+      title: 'CarRaksha - Safe Driving System',
+      period: '',
+      description: 'A vehicle safety system in C++ and Arduino for collision prevention.',
+      technologies: ['C++', 'Arduino'],
       points: [
-        'Spearheaded user-centric validation for a banknote identifier, ensuring design alignment with customer needs.',
-        'Developed detection algorithms in Python and OpenCV achieving over 95% accuracy.',
-        'Engineered an ETL pipeline using Python and SQL to integrate and transform transactional data, enabling real-time analytics.',
-        'Executed a targeted go-to-market strategy, driving a 25% increase in early adoption.',
-        'Streamlined product design with cross-functional collaboration and iterative testing based on customer insights.'
+        'Developed a vehicle safety system in C++ on Arduino for collision prevention.',
+        'Integrated MQ-3 alcohol and ultrasonic sensors, enabling automatic stops, reducing accidents by 15%.',
+        'Programmed a speed sensor to cap vehicle velocity, enhancing safety metrics.',
+        'Tested in real-world conditions with 10+ vehicles, achieving 79% reliability in safety interventions.'
       ],
-      demoUrl: 'https://github.com/Sarthak-Sethi28/iMoney',
-      imageUrl: '/projects/imoney.png'
+      demoUrl: '',
+      imageUrl: ''
+    },
+    {
+      title: 'iMoney - Banknote Identifier',
+      period: '',
+      description: 'A banknote identifier with user-centric design, ensuring customer alignment.',
+      technologies: ['Python'],
+      points: [
+        'Validated a banknote identifier with user-centric design, ensuring customer alignment.',
+        'Developed detection algorithms in Python, achieving 84% accuracy.',
+        'Optimized image processing workflows using AWS S3 to enhance detection speed and scalability.'
+      ],
+      demoUrl: '',
+      imageUrl: ''
     }
   ];
 

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="512" height="512" rx="128" fill="#000000"/>
+  
+  <!-- Laptop base -->
+  <path d="M96 352h320v32H96z" fill="#ffffff"/>
+  
+  <!-- Laptop screen -->
+  <rect x="128" y="128" width="256" height="192" rx="8" fill="#ffffff"/>
+  
+  <!-- Screen content -->
+  <rect x="144" y="144" width="224" height="160" rx="4" fill="#000000"/>
+  
+  <!-- Code symbols -->
+  <path d="M184 192l-24 32 24 32" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M328 192l24 32-24 32" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M272 176l-32 96" stroke="#ffffff" stroke-width="8" stroke-linecap="round"/>
+  
+  <!-- Keyboard glow -->
+  <rect x="96" y="352" width="320" height="4" fill="#ffffff" fill-opacity="0.5"/>
+</svg> 

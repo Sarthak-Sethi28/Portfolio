@@ -50,7 +50,7 @@ const About = () => {
     { category: 'Backend', items: ['Node.js', 'Express.js', 'Python', 'Django', 'REST APIs'] },
     { category: 'Database', items: ['MongoDB', 'PostgreSQL', 'MySQL'] },
     { category: 'DevOps', items: ['Docker', 'Git', 'GitHub Actions', 'AWS', 'Vercel'] },
-    { category: 'Tools', items: ['VS Code', 'Postman', 'Figma', 'Jira', 'Confluence'] }
+    { category: 'Tools', items: ['VS Code', 'Postman', 'Cursor', 'Pear AI', 'Jira', 'Confluence', 'Figma', 'Canva'] }
   ];
 
   const education = {

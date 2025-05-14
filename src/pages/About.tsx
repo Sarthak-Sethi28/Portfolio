@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight, Briefcase, GraduationCap, Code } from 'lucide-react';
+import SkillsDashboard from '../components/SkillsDashboard';
+import Skillverse from '../components/Skillverse';
 
 const About = () => {
   const [expandedExp, setExpandedExp] = useState<number | null>(null);
@@ -167,6 +169,9 @@ const About = () => {
             ))}
           </div>
         </motion.section>
+
+        {/* Unique Skillverse Visualization */}
+        <Skillverse />
 
         {/* Skills Section */}
         <motion.section

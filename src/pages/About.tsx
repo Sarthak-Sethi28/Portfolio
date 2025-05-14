@@ -45,11 +45,13 @@ const About = () => {
     }
   ];
 
-  const skills = {
-    languages: 'Python, Kotlin, C/C++, R, JavaScript, SQL, HTML/CSS',
-    frameworks: 'React, Node.js, Flask, Github API, REST API, OpenAI API',
-    concepts: 'AWS (EC2, S3), Docker, Jest, MySQL, PostgreSQL, Git, Figma, Canva, Power BI, Cursor, Pear AI'
-  };
+  const skills = [
+    { category: 'Frontend', items: ['React', 'TypeScript', 'JavaScript', 'HTML', 'CSS', 'Tailwind CSS'] },
+    { category: 'Backend', items: ['Node.js', 'Express.js', 'Python', 'Django', 'REST APIs'] },
+    { category: 'Database', items: ['MongoDB', 'PostgreSQL', 'MySQL'] },
+    { category: 'DevOps', items: ['Docker', 'Git', 'GitHub Actions', 'AWS', 'Vercel'] },
+    { category: 'Tools', items: ['VS Code', 'Postman', 'Figma', 'Jira', 'Confluence'] }
+  ];
 
   const education = {
     university: 'University of Waterloo',

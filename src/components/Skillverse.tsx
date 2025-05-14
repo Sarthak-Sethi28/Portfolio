@@ -111,19 +111,15 @@ const Skillverse: React.FC = () => {
                 onMouseEnter={() => setHovered(i)}
                 onMouseLeave={() => setHovered(null)}
               />
-              {/* Skill name wraps around the planet on hover */}
-              {hovered === i && (
-                <g>
-                  <defs>
-                    <path id={`circlePath${i}`} d={`M ${x} ${y} m -20,0 a 20,20 0 1,1 40,0 a 20,20 0 1,1 -40,0`} />
-                  </defs>
-                  <text fontSize={12} fill={skill.color} fontWeight="bold">
-                    <textPath href={`#circlePath${i}`} startOffset="25%">
-                      {skill.name} • {skill.name}
-                    </textPath>
-                  </text>
-                </g>
-              )}
+              {/* Skill name always visible, orbiting the planet */}
+              <defs>
+                <path id={`circlePath${i}`} d={`M ${x} ${y} m -20,0 a 20,20 0 1,1 40,0 a 20,20 0 1,1 -40,0`} />
+              </defs>
+              <text fontSize={12} fill={hovered === i ? '#fff' : skill.color} fontWeight="bold" style={{ fontWeight: hovered === i ? 900 : 700, textShadow: hovered === i ? '0 0 8px #fff' : undefined }}>
+                <textPath href={`#circlePath${i}`} startOffset="25%">
+                  {skill.name} • {skill.name}
+                </textPath>
+              </text>
               {/* Supernova burst: radiating lines */}
               {isSupernova && (
                 <g>

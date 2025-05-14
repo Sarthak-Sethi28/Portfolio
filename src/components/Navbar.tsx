@@ -40,7 +40,7 @@ const Navbar: React.FC = () => {
 
   // Handle resume download
   const handleResumeDownload = () => {
-    window.open('/Sarthak Sethi Cv.pdf', '_blank');
+    window.open('/resume/Sarthak_Sethi_Resume.pdf', '_blank');
   };
 
   return (
@@ -157,7 +157,7 @@ const Navbar: React.FC = () => {
                     className="flex items-center space-x-3 px-4 py-3 w-full rounded-md bg-cyber-accent/10 text-white hover:bg-cyber-accent/20 transition-colors duration-300 border-l-2 border-cyber-accent"
                   >
                     <Download size={18} />
-                    <span>Download Resume</span>
+                    <span>Download Resume (PDF)</span>
                   </button>
                 </li>
               </ul>

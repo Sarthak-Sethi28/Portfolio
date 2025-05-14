@@ -79,17 +79,6 @@ const About = () => {
           About Me
         </motion.h1>
 
-        {/* Skillverse Section */}
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="mb-12"
-        >
-          <h2 className="text-3xl font-bold text-cyber-accent mb-4 text-center">Skillverse: My Skills Universe</h2>
-          <Skillverse />
-        </motion.section>
-
         {/* Education Section */}
         <motion.section 
           className="mb-12"
@@ -176,32 +165,6 @@ const About = () => {
                   )}
                 </AnimatePresence>
               </motion.div>
-            ))}
-          </div>
-        </motion.section>
-
-        {/* Skills Section */}
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
-        >
-          <div className="flex items-center mb-4">
-            <Code className="text-blue-400 mr-2" size={24} />
-            <h2 className="text-2xl font-bold text-white">Skills</h2>
-          </div>
-          <div className="bg-gray-800/50 rounded-lg p-6 space-y-4">
-            {skills.map((skill, idx) => (
-              <div key={skill.category} className="mb-4">
-                <h3 className="text-lg font-semibold text-cyber-accent mb-2">{skill.category}</h3>
-                <div className="flex flex-wrap gap-2">
-                  {skill.items.map((item) => (
-                    <span key={item} className="bg-cyber-dark px-3 py-1 rounded-full text-gray-300 text-sm border border-cyber-accent/30">
-                      {item}
-                    </span>
-                  ))}
-                </div>
-              </div>
             ))}
           </div>
         </motion.section>

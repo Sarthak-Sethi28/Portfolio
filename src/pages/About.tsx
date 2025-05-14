@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight, Briefcase, GraduationCap, Code } from 'lucide-react';
-import SkillsDashboard from '../components/SkillsDashboard';
-import Skillverse from '../components/Skillverse';
 
 const About = () => {
   const [expandedExp, setExpandedExp] = useState<number | null>(null);
@@ -45,13 +43,6 @@ const About = () => {
         'Generated monthly analytics reports with traffic summaries and visualized KPIs using Google Sheets and Charts.'
       ]
     }
-  ];
-
-  const skills = [
-    { category: 'Frontend', items: ['React', 'TypeScript', 'JavaScript', 'HTML', 'CSS', 'Tailwind CSS'] },
-    { category: 'Backend', items: ['Node.js', 'Express.js', 'Python', 'Django', 'REST APIs'] },
-    { category: 'Database', items: ['MongoDB', 'PostgreSQL', 'MySQL'] },
-    { category: 'DevOps', items: ['Docker', 'Git', 'GitHub Actions', 'AWS', 'Vercel'] },
   ];
 
   const education = {

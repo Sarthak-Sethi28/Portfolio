@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const skills = [
   { name: 'React', color: '#00f2fe' },
@@ -33,7 +33,21 @@ const Skillverse: React.FC = () => {
   const [supernovaIdx, setSupernovaIdx] = useState<number | null>(null);
   const [easterEgg, setEasterEgg] = useState(false);
   const [hovered, setHovered] = useState<number | null>(null);
+  const [orbitAngles, setOrbitAngles] = useState<number[]>(() => skills.map(() => getRandom(0, 360)));
+  const requestRef = useRef<number>();
 
+  // Animate orbits smoothly
+  useEffect(() => {
+    const speeds = skills.map((_, i) => getRandom(0.12, 0.32) * (i % 2 === 0 ? 1 : -1));
+    const animate = () => {
+      setOrbitAngles(prev => prev.map((a, i) => (a + speeds[i]) % 360));
+      requestRef.current = requestAnimationFrame(animate);
+    };
+    requestRef.current = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(requestRef.current!);
+  }, []);
+
+  // Supernova event
   useEffect(() => {
     const interval = setInterval(() => {
       setSupernovaIdx(Math.floor(Math.random() * skills.length));
@@ -71,23 +85,29 @@ const Skillverse: React.FC = () => {
         </g>
         {/* Planets (Skills) */}
         {skills.map((skill, i) => {
-          const angle = (360 / skills.length) * i + (Date.now() / (2000 + i * 100)) % 360;
+          const angle = orbitAngles[i];
           const rad = (angle * Math.PI) / 180;
           const r = orbitBase + orbitStep * (i % 6);
           const x = cx + r * Math.cos(rad);
           const y = cy + r * Math.sin(rad);
           const isSupernova = supernovaIdx === i;
           return (
-            <g key={skill.name} style={{ transition: 'filter 0.3s', filter: hovered === i ? 'drop-shadow(0 0 12px #fff)' : undefined }}>
+            <g key={skill.name} style={{ transition: 'filter 0.3s', filter: hovered === i ? 'drop-shadow(0 0 16px #fff)' : undefined }}>
               {/* Trail */}
               <circle cx={cx} cy={cy} r={r} fill="none" stroke={skill.color} strokeWidth={hovered === i ? 2.5 : 1.2} strokeDasharray="2 8" opacity={0.18} />
               {/* Planet */}
               <circle
                 cx={x}
                 cy={y}
-                r={isSupernova ? 22 : 13}
+                r={isSupernova ? 28 : 15}
                 fill={isSupernova ? '#fff' : skill.color}
-                style={{ transition: 'all 0.4s cubic-bezier(.4,2,.6,1)', cursor: 'pointer', filter: isSupernova ? 'blur(2px) brightness(2)' : 'drop-shadow(0 0 8px ' + skill.color + ')' }}
+                style={{
+                  transition: 'all 0.4s cubic-bezier(.4,2,.6,1)',
+                  cursor: 'pointer',
+                  filter: isSupernova ? 'blur(4px) brightness(2)' : `drop-shadow(0 0 12px ${skill.color})`,
+                  animation: hovered === i ? 'planetPulse 0.7s infinite alternate' : 'planetPulse 1.8s infinite alternate',
+                  opacity: isSupernova ? 0.7 : 1
+                }}
                 onMouseEnter={() => setHovered(i)}
                 onMouseLeave={() => setHovered(null)}
               />
@@ -96,14 +116,13 @@ const Skillverse: React.FC = () => {
                 <g>
                   <rect x={x - 48} y={y - 38} width={96} height={28} rx={8} fill="#181a20ee" stroke={skill.color} strokeWidth={1.5} />
                   <text x={x} y={y - 20} textAnchor="middle" fontSize={13} fill="#fff" fontWeight="bold">{skill.name}</text>
-                  <text x={x} y={y - 7} textAnchor="middle" fontSize={11} fill={skill.color} fontWeight="bold">{Math.floor(getRandom(70, 100))}%</text>
                 </g>
               )}
               {/* Supernova burst */}
               {isSupernova && (
                 <g>
-                  <circle cx={x} cy={y} r={32} fill="#fff" opacity={0.18} />
-                  <text x={x} y={y + 5} textAnchor="middle" fontSize={18} fill="#8f00ff" fontWeight="bold">💥</text>
+                  <circle cx={x} cy={y} r={48} fill="#fff" opacity={0.22} />
+                  <text x={x} y={y + 5} textAnchor="middle" fontSize={28} fill="#8f00ff" fontWeight="bold">💥</text>
                 </g>
               )}
             </g>
@@ -122,6 +141,12 @@ const Skillverse: React.FC = () => {
       </svg>
       {/* Easter egg message */}
       {easterEgg && <div style={{ position: 'absolute', top: 16, left: 0, right: 0, textAlign: 'center', color: '#8f00ff', fontWeight: 700, fontSize: 18, textShadow: '0 0 8px #fff' }}>👾 Welcome to the Skillverse! 🚀</div>}
+      <style>{`
+        @keyframes planetPulse {
+          0% { filter: brightness(1) drop-shadow(0 0 8px #00f2fe); }
+          100% { filter: brightness(1.3) drop-shadow(0 0 24px #fff); }
+        }
+      `}</style>
     </div>
   );
 };

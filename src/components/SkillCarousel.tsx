@@ -89,11 +89,6 @@ const SkillCarousel: React.FC = () => {
             >
               <span style={{ fontSize: 38, marginBottom: 8 }}>{skill.name[0]}</span>
               <span>{skill.name}</span>
-              {centerIdx === i && (
-                <span style={{ fontSize: 14, color: '#fff', marginTop: 12, fontWeight: 400 }}>
-                  {skill.name} is one of my key skills!
-                </span>
-              )}
             </div>
           ))}
         </div>

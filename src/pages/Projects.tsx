@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, ChevronRight, Code, Calendar, Tag } from 'lucide-react';
+import { ExternalLink, ChevronRight, Code, Calendar, Tag, AlertCircle } from 'lucide-react';
 
 const Projects = () => {
   const [expandedProject, setExpandedProject] = useState<number | null>(null);
   const [hoveredTech, setHoveredTech] = useState<string | null>(null);
+  const [showTooltip, setShowTooltip] = useState<number | null>(null);
 
   const projects = [
     {
@@ -18,7 +19,8 @@ const Projects = () => {
         'Integrated SEO optimization, increasing website visibility and reducing load times.',
         'Implemented interactive project showcases to highlight technical expertise and personal branding.'
       ],
-      demoUrl: 'https://github.com/Sarthak-Sethi',
+      demoUrl: 'https://github.com/Sarthak-Sethi/portfolio',
+      repoExists: true,
       imageUrl: ''
     },
     {
@@ -33,7 +35,8 @@ const Projects = () => {
         'Engineered the backend with extfbsecure cloud storage, audio/video encoding, and real-time location tracking.',
         'Collaborated on mobile app integration to manage contacts, view alerts, and enhance user control.'
       ],
-      demoUrl: 'https://github.com/Sarthak-Sethi',
+      demoUrl: 'https://github.com/Sarthak-Sethi28/GIM',
+      repoExists: true,
       imageUrl: ''
     },
     {
@@ -47,7 +50,8 @@ const Projects = () => {
         'Programmed a speed sensor to cap vehicle velocity, enhancing safety metrics.',
         'Tested in real-world conditions with 10+ vehicles, achieving 79% reliability in safety interventions.'
       ],
-      demoUrl: 'https://github.com/Sarthak-Sethi',
+      demoUrl: 'https://github.com/Sarthak-Sethi28/CaRaksha',
+      repoExists: true,
       imageUrl: ''
     },
     {
@@ -60,10 +64,19 @@ const Projects = () => {
         'Developed detection algorithms in Python, achieving 84% accuracy.',
         'Optimized image processing workflows using AWS S3 to enhance detection speed and scalability.'
       ],
-      demoUrl: 'https://github.com/Sarthak-Sethi',
+      demoUrl: 'https://github.com/Sarthak-Sethi28/iMoney',
+      repoExists: true,
       imageUrl: ''
     }
   ];
+
+  // Function to handle project link click
+  const handleProjectClick = (e: React.MouseEvent, project: typeof projects[0]) => {
+    if (!project.repoExists) {
+      e.preventDefault();
+      alert("This repository is currently being set up. Please check back later or contact me for more information about this project.");
+    }
+  };
 
   return (
     <div className="min-h-screen py-20">
@@ -166,19 +179,22 @@ const Projects = () => {
                         ))}
                       </ul>
                       
-                      <motion.a
-                        href={project.demoUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center px-4 py-2 rounded-md bg-cyber-accent text-white
-                                 hover:bg-cyber-accent-dark transition-colors duration-300"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        <Code size={16} className="mr-2" />
-                        View on GitHub
-                        <ExternalLink size={16} className="ml-2" />
-                      </motion.a>
+                      <div className="relative">
+                        <motion.a
+                          href={project.demoUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center px-4 py-2 rounded-md bg-cyber-accent text-white
+                                  hover:bg-cyber-accent-dark transition-colors duration-300"
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={(e) => handleProjectClick(e, project)}
+                        >
+                          <Code size={16} className="mr-2" />
+                          View on GitHub
+                          <ExternalLink size={16} className="ml-2" />
+                        </motion.a>
+                      </div>
                     </motion.div>
                   )}
                 </AnimatePresence>

@@ -8,6 +8,7 @@ import About from './pages/About';
 import Projects from './pages/Projects';
 import Contact from './pages/Contact';
 import SkillversePage from './pages/Skillverse';
+import NotFound from './pages/NotFound';
 import './index.css';
 
 // Wrapper component for AnimatePresence to access location
@@ -107,6 +108,19 @@ const AnimatedRoutes = () => {
               exit="exit"
             >
               <SkillversePage />
+            </motion.div>
+          } 
+        />
+        <Route 
+          path="*" 
+          element={
+            <motion.div
+              variants={pageVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+            >
+              <NotFound />
             </motion.div>
           } 
         />

@@ -18,7 +18,7 @@ const Projects = () => {
         'Integrated SEO optimization, increasing website visibility and reducing load times.',
         'Implemented interactive project showcases to highlight technical expertise and personal branding.'
       ],
-      demoUrl: 'https://github.com/Sarthak-Sethi28/Portfolio',
+      demoUrl: 'https://github.com/Sarthak-Sethi',
       imageUrl: ''
     },
     {
@@ -33,7 +33,7 @@ const Projects = () => {
         'Engineered the backend with extfbsecure cloud storage, audio/video encoding, and real-time location tracking.',
         'Collaborated on mobile app integration to manage contacts, view alerts, and enhance user control.'
       ],
-      demoUrl: 'https://github.com/Sarthak-Sethi28/GIM-Guard-in-Motion',
+      demoUrl: 'https://github.com/Sarthak-Sethi',
       imageUrl: ''
     },
     {
@@ -47,7 +47,7 @@ const Projects = () => {
         'Programmed a speed sensor to cap vehicle velocity, enhancing safety metrics.',
         'Tested in real-world conditions with 10+ vehicles, achieving 79% reliability in safety interventions.'
       ],
-      demoUrl: 'https://github.com/Sarthak-Sethi28/CarRaksha',
+      demoUrl: 'https://github.com/Sarthak-Sethi',
       imageUrl: ''
     },
     {
@@ -60,7 +60,7 @@ const Projects = () => {
         'Developed detection algorithms in Python, achieving 84% accuracy.',
         'Optimized image processing workflows using AWS S3 to enhance detection speed and scalability.'
       ],
-      demoUrl: 'https://github.com/Sarthak-Sethi28/iMoney-Banknote-Identifier',
+      demoUrl: 'https://github.com/Sarthak-Sethi',
       imageUrl: ''
     }
   ];

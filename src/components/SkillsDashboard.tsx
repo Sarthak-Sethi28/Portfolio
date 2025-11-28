@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import './SkillsDashboard.css';
 
 const skills = [
-  { category: 'Frontend', items: ['React', 'TypeScript', 'JavaScript', 'HTML', 'CSS', 'Tailwind CSS'] },
-  { category: 'Backend', items: ['Node.js', 'Express.js', 'Python', 'Django', 'REST APIs'] },
-  { category: 'Database', items: ['MongoDB', 'PostgreSQL', 'MySQL'] },
-  { category: 'DevOps', items: ['Docker', 'Git', 'GitHub Actions', 'AWS', 'Vercel'] },
-  { category: 'Tools', items: ['VS Code', 'Postman', 'Figma', 'Jira', 'Confluence'] }
+  { category: 'Languages', items: ['Python', 'JavaScript', 'TypeScript', 'C/C++', 'SQL', 'HTML/CSS', 'Bash', 'R'] },
+  { category: 'Frontend', items: ['React', 'React Router', 'Tailwind CSS', 'Redux'] },
+  { category: 'Backend', items: ['FastAPI', 'Flask', 'Node.js', 'Express', 'REST API', 'OpenAI API'] },
+  { category: 'Database', items: ['PostgreSQL', 'MySQL', 'SQLite', 'SQLAlchemy'] },
+  { category: 'Cloud/DevOps', items: ['AWS (EC2, S3)', 'Docker', 'Render', 'Uvicorn', 'CI/CD', 'Jenkins'] },
+  { category: 'Tools', items: ['Git', 'GitLab', 'Figma', 'Canva', 'Power BI', 'Cursor', 'Pear AI', 'Jest', 'Pandas', 'OpenPyXL', 'Powershell'] }
 ];
 
 const aiMessages = [

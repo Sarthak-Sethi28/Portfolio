@@ -1,46 +1,36 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronRight, Briefcase, GraduationCap, Code } from 'lucide-react';
+import { ChevronRight, Briefcase, GraduationCap } from 'lucide-react';
 
 const About = () => {
   const [expandedExp, setExpandedExp] = useState<number | null>(null);
-  const [activeSkillTab, setActiveSkillTab] = useState('languages');
 
   const experiences = [
     {
-      company: 'Prompt Solutions India',
+      company: 'Danier',
+      role: 'Software Developer',
+      period: 'Jun 2025 – Aug 2025',
+      points: [
+        'Developed a custom chatbot with FastAPI (Python), React, and Tailwind CSS, integrating FAQ/product search, analytics hooks, and caching for faster and more reliable responses across the site.',
+        'Built a Low-Stock Alert System using FastAPI, SQLAlchemy, and Pandas/OpenPyXL, sending automated HTML email alerts to stakeholders and improving on-page SEO to boost visibility in search rankings.'
+      ]
+    },
+    {
+      company: 'Prompt Solutions',
       role: 'Front-End Developer',
       period: 'Aug 2023 – Jul 2024',
       points: [
-        'Built a HIPAA-compliant healthcare platform integrating hospital locations, emergency services, and online consultations for thousands of users.',
-        'Developed the front end (web) using React, leveraging Redux using JavaScript for state management.',
-        'Managed and developed a microservices backend using Python (Flask) hosted on AWS EC2 for scalable healthcare services.',
-        'Worked in a cross-functional team of 5 developers, ensuring on-time delivery and stakeholder satisfaction.',
-        'Launched with 5000+ user sign-ups, improving emergency response efficiency by 32%.'
+        'Delivered a HIPAA-compliant healthcare platform using React (Redux) and Flask on AWS EC2, integrating APIs for emergency services and ensuring a safe and scalable patient experience.',
+        'Launched the platform to 5000+ users, improving emergency response efficiency by 32% through optimized UI components and backend microservices designed for speed and reliability.'
       ]
     },
     {
-      company: 'Nokia India',
-      role: 'Software Engineer Co-op',
+      company: 'NOiSA',
+      role: 'Software Engineer',
       period: 'Jun 2023 – Jul 2023',
       points: [
-        'Modernized an outdated bug tracking system to reduce duplicate efforts and improve resolution times.',
-        'Revamped using Node.js and Express, optimizing PostgreSQL queries to boost performance by 47%.',
-        'Created custom React dashboards with D3.js for real-time analytics and deployed via Docker.',
-        'Integrated unit testing with Jest, achieving 63% code coverage and reducing bug recurrence.'
-      ]
-    },
-    {
-      company: 'Creative Stree India',
-      role: 'Digital Marketing Analyst',
-      period: 'Oct 2022 – Dec 2022',
-      points: [
-        'Ran A/B tests on landing pages and ad creatives; evaluated performance using CTR and bounce rate metrics.',
-        'Built static campaign pages using HTML, CSS, and JavaScript; maintained brand styling consistency.',
-        'Implemented on-page SEO (title tags, meta descriptions, heading structure) using keyword research.',
-        'Used Google Analytics to track traffic sources, user behavior, and session durations.',
-        'Managed content delivery via Meta Business Suite and Canva; scheduled promotional assets for Instagram and Facebook.',
-        'Generated monthly analytics reports with traffic summaries and visualized KPIs using Google Sheets and Charts.'
+        'Modernized bug tracking with Node.js/Express and optimized PostgreSQL queries, significantly reducing load times by 47% and improving overall database query performance for internal tools.',
+        'Created React dashboards with D3.js visualizations, containerized with Docker for deployment and consistent results across all developer environments.'
       ]
     }
   ];

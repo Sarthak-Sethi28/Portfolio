@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import emailjs from '@emailjs/browser';
-import { Mail, Phone, MapPin, Clock, Linkedin, Github } from 'lucide-react';
+import { Mail, Phone, MapPin, Clock, Linkedin, Github, ExternalLink } from 'lucide-react';
 import { EMAILJS_CONFIG } from '../config/emailjs';
 
 const Contact = () => {
@@ -79,6 +79,11 @@ const Contact = () => {
       name: 'GitHub',
       url: 'https://github.com/Sarthak-Sethi28',
       icon: <Github className="w-6 h-6" />,
+    },
+    {
+      name: 'Portfolio',
+      url: 'https://sarthaksethi.com',
+      icon: <ExternalLink className="w-6 h-6" />,
     }
   ];
 

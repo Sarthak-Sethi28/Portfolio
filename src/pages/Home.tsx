@@ -8,9 +8,12 @@ const Home = () => {
   const skills = [
     { name: 'React', icon: <Code className="mr-2" size={16} /> },
     { name: 'Python', icon: <Terminal className="mr-2" size={16} /> },
-    { name: 'SQL', icon: <Cloud className="mr-2" size={16} /> },
+    { name: 'FastAPI', icon: <Cloud className="mr-2" size={16} /> },
     { name: 'Node.js', icon: <Cpu className="mr-2" size={16} /> },
-    { name: 'Kotlin', icon: <Database className="mr-2" size={16} /> }
+    { name: 'PostgreSQL', icon: <Database className="mr-2" size={16} /> },
+    { name: 'TypeScript', icon: <Code className="mr-2" size={16} /> },
+    { name: 'AWS', icon: <Cloud className="mr-2" size={16} /> },
+    { name: 'Docker', icon: <Cpu className="mr-2" size={16} /> }
   ];
 
   const containerRef = useRef<HTMLDivElement>(null);

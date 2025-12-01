@@ -225,7 +225,7 @@ const Home = () => {
       isInternal: false
     },
     {
-      title: 'iMoney - Accessible Finance Manager for Visually ImPAIRED',
+      title: 'iMoney - Accessible Finance Manager for Visually Impaired',
       period: '2024',
       description: 'Accessible personal finance application designed specifically for visually impaired users with voice navigation and screen reader optimization.',
       technologies: ['React', 'Node.js', 'MongoDB', 'Express', 'Web Speech API', 'ARIA'],

@@ -385,7 +385,7 @@ html {
   box-shadow: 0 0 10px rgba(0, 255, 242, 0.2);
 }
 
-/* AGGRESSIVE: Remove ALL video controls and play buttons */
+/* NUCLEAR OPTION: Remove ALL video controls and play buttons */
 video::-webkit-media-controls,
 video::-webkit-media-controls-enclosure,
 video::-webkit-media-controls-panel,
@@ -397,11 +397,14 @@ video::-webkit-media-controls-time-remaining-display,
 video::-webkit-media-controls-timeline,
 video::-webkit-media-controls-volume-slider,
 video::-webkit-media-controls-mute-button,
-video::-webkit-media-controls-fullscreen-button {
+video::-webkit-media-controls-fullscreen-button,
+video::-webkit-media-controls-toggle-closed-captions-button {
   display: none !important;
   opacity: 0 !important;
   visibility: hidden !important;
   pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
 video::-moz-media-controls {
@@ -412,20 +415,47 @@ video::-ms-media-controls {
   display: none !important;
 }
 
-/* Specific class for our videos */
+/* Target ALL video elements */
+video {
+  outline: none !important;
+}
+
+video:focus {
+  outline: none !important;
+}
+
+/* Specific class targeting */
+.no-controls {
+  outline: none !important;
+  border: none !important;
+}
+
 .no-controls::-webkit-media-controls {
   display: none !important;
+  opacity: 0 !important;
 }
 
 .no-controls::-webkit-media-controls-enclosure {
   display: none !important;
+  opacity: 0 !important;
 }
 
 .no-controls::-webkit-media-controls-overlay-play-button {
   display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
-/* Force videos to be non-interactive */
-video.no-controls {
-  pointer-events: none !important;
+.no-controls::-webkit-media-controls-play-button {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+.no-controls::-webkit-media-controls-start-playback-button {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
 }

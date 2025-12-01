@@ -818,41 +818,30 @@ const Home = () => {
                     transition={{ delay: index * 0.2 }}
                     className={`bg-gray-800/50 rounded-lg overflow-hidden border border-transparent hover:border-cyber-accent/30 transition-all duration-300 ${expandedProject === index ? 'bg-gray-800/70' : ''}`}
                   >
-                    {/* Media Display - Videos OR Images ONLY */}
-                    {project.videoUrl && (
-                      <div className="w-full bg-black border-b-2 border-cyber-accent/20 relative">
-                        <video
-                          autoPlay
-                          loop
-                          muted
-                          playsInline
-                          className="w-full h-[400px] object-cover"
-                          style={{ 
-                            pointerEvents: 'none',
-                            outline: 'none'
-                          }}
-                        >
-                          <source src={project.videoUrl} type="video/mp4" />
-                        </video>
-                        <style jsx>{`
-                          video::-webkit-media-controls { display: none !important; }
-                          video::-webkit-media-controls-enclosure { display: none !important; }
-                          video::-webkit-media-controls-panel { display: none !important; }
-                          video::-webkit-media-controls-play-button { display: none !important; }
-                          video::-webkit-media-controls-start-playback-button { display: none !important; }
-                          video::-webkit-media-controls-overlay-play-button { display: none !important; }
-                        `}</style>
-                      </div>
-                    )}
-                    
-                    {!project.videoUrl && project.imageUrl && (
-                      <div className="w-full bg-gray-900/50 border-b-2 border-cyber-accent/20">
-                        <img
-                          src={project.imageUrl}
-                          alt={`${project.title} preview`}
-                          className="w-full h-[400px] object-cover"
-                          draggable={false}
-                        />
+                    {/* Video/Image at the top - ORIGINAL SIZE */}
+                    {(project.videoUrl || project.imageUrl) && (
+                      <div className="w-full bg-gray-900/50 border-b-2 border-cyber-accent/20 relative overflow-hidden">
+                        {project.videoUrl ? (
+                          <video
+                            autoPlay
+                            loop
+                            muted
+                            playsInline
+                            controls={false}
+                            className="w-full max-h-[500px] object-contain no-controls"
+                            onContextMenu={(e) => e.preventDefault()}
+                            onClick={(e) => e.preventDefault()}
+                          >
+                            <source src={project.videoUrl} type="video/mp4" />
+                          </video>
+                        ) : (
+                          <img
+                            src={project.imageUrl}
+                            alt={`${project.title} preview`}
+                            className="w-full max-h-[500px] object-contain"
+                            draggable={false}
+                          />
+                        )}
                       </div>
                     )}
                     

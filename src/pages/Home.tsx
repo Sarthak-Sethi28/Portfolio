@@ -136,7 +136,6 @@ const Home = () => {
       ],
       demoUrl: 'https://github.com/Sarthak-Sethi28/muse-sketch-studio',
       videoUrl: '/assets/projects/videos/muse-sketch-studio.mp4',
-      imageUrl: '/assets/projects/images/muse-sketch-studio.png',
       isInternal: false
     },
     {
@@ -154,7 +153,6 @@ const Home = () => {
       ],
       demoUrl: 'https://github.com/Sarthak-Sethi28/danier-chatbot',
       videoUrl: '/assets/projects/videos/custom-chatbot.mp4',
-      imageUrl: '/assets/projects/images/custom-chatbot.png',
       isInternal: false
     },
     {
@@ -188,7 +186,6 @@ const Home = () => {
         'Created modular hardware adaptable to multiple vehicle configurations.'
       ],
       demoUrl: 'https://github.com/Sarthak-Sethi28/CarRaksha',
-      videoUrl: '/assets/projects/videos/caraksha.mp4',
       imageUrl: '/assets/projects/images/caraksha.png',
       isInternal: false
     },
@@ -206,7 +203,6 @@ const Home = () => {
         'Designed cyber-themed UI with gradient effects and interactive elements.'
       ],
       demoUrl: 'https://github.com/Sarthak-Sethi28/portfolio',
-      videoUrl: '/assets/projects/videos/portfolio.mp4',
       imageUrl: '/assets/projects/images/portfolio.png',
       isInternal: false
     },
@@ -225,7 +221,6 @@ const Home = () => {
         'Minimized data loss during network disruptions through buffering mechanisms.'
       ],
       demoUrl: 'https://github.com/Sarthak-Sethi28/GIM',
-      videoUrl: '/assets/projects/videos/gim.mp4',
       imageUrl: '/assets/projects/images/gim.png',
       isInternal: false
     },
@@ -244,7 +239,6 @@ const Home = () => {
         'Developed real-time audio alerts for bill reminders and budget notifications.'
       ],
       demoUrl: 'https://github.com/Sarthak-Sethi28/iMoney',
-      videoUrl: '/assets/projects/videos/imoney.mp4',
       imageUrl: '/assets/projects/images/imoney.png',
       isInternal: false
     }

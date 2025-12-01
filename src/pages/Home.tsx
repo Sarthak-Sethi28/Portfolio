@@ -820,16 +820,18 @@ const Home = () => {
                   >
                     {/* Video/Image at the top */}
                     {(project.videoUrl || project.imageUrl) && (
-                      <div className="w-full bg-gray-900/50 border-b-2 border-cyber-accent/20">
+                      <div className="w-full bg-gray-900/50 border-b-2 border-cyber-accent/20 relative overflow-hidden">
                         {project.videoUrl ? (
                           <video
                             autoPlay
                             loop
                             muted
                             playsInline
-                            className="w-full max-h-[500px] object-contain"
+                            disablePictureInPicture
+                            controlsList="nodownload nofullscreen noremoteplayback"
+                            className="w-full max-h-[500px] object-contain cursor-default"
                             poster={project.imageUrl}
-                            onClick={(e) => e.stopPropagation()}
+                            style={{ pointerEvents: 'none' }}
                           >
                             <source src={project.videoUrl} type="video/mp4" />
                             Your browser does not support the video tag.

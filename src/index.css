@@ -385,37 +385,23 @@ html {
   box-shadow: 0 0 10px rgba(0, 255, 242, 0.2);
 }
 
-/* Remove ALL video controls and play button overlays */
-video::-webkit-media-controls {
+/* AGGRESSIVE: Remove ALL video controls and play buttons */
+video::-webkit-media-controls,
+video::-webkit-media-controls-enclosure,
+video::-webkit-media-controls-panel,
+video::-webkit-media-controls-play-button,
+video::-webkit-media-controls-start-playback-button,
+video::-webkit-media-controls-overlay-play-button,
+video::-webkit-media-controls-current-time-display,
+video::-webkit-media-controls-time-remaining-display,
+video::-webkit-media-controls-timeline,
+video::-webkit-media-controls-volume-slider,
+video::-webkit-media-controls-mute-button,
+video::-webkit-media-controls-fullscreen-button {
   display: none !important;
   opacity: 0 !important;
   visibility: hidden !important;
-}
-
-video::-webkit-media-controls-enclosure {
-  display: none !important;
-  opacity: 0 !important;
-  visibility: hidden !important;
-}
-
-video::-webkit-media-controls-panel {
-  display: none !important;
-  opacity: 0 !important;
-}
-
-video::-webkit-media-controls-play-button {
-  display: none !important;
-  opacity: 0 !important;
-}
-
-video::-webkit-media-controls-start-playback-button {
-  display: none !important;
-  opacity: 0 !important;
-}
-
-video::-webkit-media-controls-overlay-play-button {
-  display: none !important;
-  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
 video::-moz-media-controls {
@@ -426,15 +412,20 @@ video::-ms-media-controls {
   display: none !important;
 }
 
-video::--webkit-media-text-track-container {
+/* Specific class for our videos */
+.no-controls::-webkit-media-controls {
   display: none !important;
 }
 
-/* Force videos to be completely non-interactive */
-video {
-  pointer-events: none !important;
+.no-controls::-webkit-media-controls-enclosure {
+  display: none !important;
 }
 
-video[controls] {
-  controls: none !important;
+.no-controls::-webkit-media-controls-overlay-play-button {
+  display: none !important;
+}
+
+/* Force videos to be non-interactive */
+video.no-controls {
+  pointer-events: none !important;
 }

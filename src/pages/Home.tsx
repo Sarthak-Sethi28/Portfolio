@@ -823,8 +823,20 @@ const Home = () => {
                       <div className="w-full bg-gray-900/50 border-b-2 border-cyber-accent/20 relative overflow-hidden">
                         {project.videoUrl ? (
                           /* Seamless looping video - NO controls */
-                          <div className="relative w-full">
+                          <div className="relative w-full bg-black">
                             <video
+                              ref={(el) => {
+                                if (el) {
+                                  el.play().catch(() => {
+                                    // Auto-play might be blocked, try again on user interaction
+                                    const playVideo = () => {
+                                      el.play();
+                                      document.removeEventListener('click', playVideo);
+                                    };
+                                    document.addEventListener('click', playVideo, { once: true });
+                                  });
+                                }
+                              }}
                               autoPlay
                               loop
                               muted
@@ -833,31 +845,40 @@ const Home = () => {
                               className="w-full max-h-[500px] object-contain block"
                               style={{ 
                                 pointerEvents: 'none',
-                                outline: 'none'
+                                outline: 'none',
+                                background: 'transparent'
                               }}
                               onContextMenu={(e) => e.preventDefault()}
+                              onLoadedMetadata={(e) => {
+                                const video = e.target as HTMLVideoElement;
+                                video.play();
+                              }}
                             >
                               <source src={project.videoUrl} type="video/mp4" />
                             </video>
-                            {/* Invisible overlay to block all interactions */}
+                            {/* Invisible overlay to block all interactions but allow clicking card */}
                             <div 
-                              className="absolute inset-0 z-10 cursor-default" 
-                              onClick={(e) => e.stopPropagation()}
-                              onDoubleClick={(e) => e.preventDefault()}
+                              className="absolute inset-0 z-10" 
+                              style={{ background: 'transparent', pointerEvents: 'auto' }}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setExpandedProject(expandedProject === index ? null : index);
+                              }}
                             />
                           </div>
-                        ) : (
-                          /* Static image - NO video element at all */
-                          <div className="relative w-full">
+                        ) : project.imageUrl ? (
+                          /* Static image - Clean display */
+                          <div className="relative w-full bg-gray-900">
                             <img
                               src={project.imageUrl}
                               alt={`${project.title} preview`}
-                              className="w-full max-h-[500px] object-contain block"
+                              className="w-full max-h-[500px] object-contain block mx-auto"
                               draggable={false}
                               onContextMenu={(e) => e.preventDefault()}
+                              loading="lazy"
                             />
                           </div>
-                        )}
+                        ) : null}
                       </div>
                     )}
                     

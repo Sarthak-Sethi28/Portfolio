@@ -818,29 +818,40 @@ const Home = () => {
                     transition={{ delay: index * 0.2 }}
                     className={`bg-gray-800/50 rounded-lg overflow-hidden border border-transparent hover:border-cyber-accent/30 transition-all duration-300 ${expandedProject === index ? 'bg-gray-800/70' : ''}`}
                   >
-                    {/* Video/Image at the top */}
+                    {/* Video/Image at the top - No controls, seamless loop */}
                     {(project.videoUrl || project.imageUrl) && (
-                      <div className="w-full bg-gray-900/50 border-b-2 border-cyber-accent/20 relative overflow-hidden">
+                      <div className="w-full bg-gray-900/50 border-b-2 border-cyber-accent/20 relative overflow-hidden select-none">
                         {project.videoUrl ? (
-                          <video
-                            autoPlay
-                            loop
-                            muted
-                            playsInline
-                            disablePictureInPicture
-                            controlsList="nodownload nofullscreen noremoteplayback"
-                            className="w-full max-h-[500px] object-contain cursor-default"
-                            poster={project.imageUrl}
-                            style={{ pointerEvents: 'none' }}
-                          >
-                            <source src={project.videoUrl} type="video/mp4" />
-                            Your browser does not support the video tag.
-                          </video>
+                          <div className="relative w-full" style={{ pointerEvents: 'none' }}>
+                            <video
+                              autoPlay
+                              loop
+                              muted
+                              playsInline
+                              preload="auto"
+                              disablePictureInPicture
+                              disableRemotePlayback
+                              controls={false}
+                              className="w-full max-h-[500px] object-contain"
+                              style={{ 
+                                pointerEvents: 'none',
+                                WebkitUserSelect: 'none',
+                                MozUserSelect: 'none',
+                                msUserSelect: 'none',
+                                userSelect: 'none'
+                              }}
+                            >
+                              <source src={project.videoUrl} type="video/mp4" />
+                            </video>
+                            {/* Overlay to prevent any interaction */}
+                            <div className="absolute inset-0 z-10" style={{ pointerEvents: 'auto' }} onClick={(e) => e.stopPropagation()} />
+                          </div>
                         ) : project.imageUrl ? (
                           <img
                             src={project.imageUrl}
                             alt={`${project.title} preview`}
-                            className="w-full max-h-[500px] object-contain"
+                            className="w-full max-h-[500px] object-contain select-none"
+                            draggable={false}
                           />
                         ) : null}
                       </div>

@@ -1,0 +1,17 @@
+# Ignore large original videos
+public/assets/projects/videos/*-original.mp4
+
+# Ignore development files
+node_modules
+.git
+*.log
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Ignore documentation
+*.md
+!README.md
+

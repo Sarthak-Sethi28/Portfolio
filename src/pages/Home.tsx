@@ -819,51 +819,76 @@ const Home = () => {
                           <video
                             ref={(video) => {
                               if (video) {
-                                // Set all properties programmatically
+                                // Aggressive video setup
                                 video.defaultMuted = true;
                                 video.muted = true;
                                 video.autoplay = true;
                                 video.loop = true;
                                 video.playsInline = true;
                                 video.controls = false;
+                                video.preload = 'auto';
                                 
-                                // Multiple autoplay triggers
-                                const forcePlay = () => {
-                                  video.currentTime = 0;
-                                  video.play().catch(() => {
-                                    // If blocked, try again on any user interaction
-                                    const startVideo = () => {
-                                      video.play();
-                                      document.removeEventListener('click', startVideo);
-                                      document.removeEventListener('scroll', startVideo);
-                                      document.removeEventListener('touchstart', startVideo);
+                                // Super aggressive autoplay function
+                                const aggressivePlay = async () => {
+                                  try {
+                                    video.currentTime = 0;
+                                    video.muted = true;
+                                    await video.play();
+                                    console.log('✅ Video playing:', project.videoUrl);
+                                  } catch (error) {
+                                    console.log('❌ Autoplay blocked, setting up triggers:', error);
+                                    
+                                    // If autoplay is blocked, try on ANY interaction
+                                    const playOnInteraction = () => {
+                                      video.play().then(() => {
+                                        console.log('✅ Video started after interaction');
+                                      });
                                     };
-                                    document.addEventListener('click', startVideo, { once: true });
-                                    document.addEventListener('scroll', startVideo, { once: true });
-                                    document.addEventListener('touchstart', startVideo, { once: true });
-                                  });
+                                    
+                                    // Multiple interaction triggers
+                                    document.addEventListener('click', playOnInteraction, { once: true });
+                                    document.addEventListener('scroll', playOnInteraction, { once: true });
+                                    document.addEventListener('touchstart', playOnInteraction, { once: true });
+                                    document.addEventListener('keydown', playOnInteraction, { once: true });
+                                    window.addEventListener('focus', playOnInteraction, { once: true });
+                                  }
                                 };
                                 
-                                // Try multiple times with different events
-                                video.addEventListener('loadeddata', forcePlay);
-                                video.addEventListener('canplay', forcePlay);
-                                video.addEventListener('loadedmetadata', forcePlay);
+                                // Try playing on multiple events
+                                video.addEventListener('loadeddata', aggressivePlay);
+                                video.addEventListener('canplay', aggressivePlay);
+                                video.addEventListener('loadedmetadata', aggressivePlay);
+                                video.addEventListener('loadstart', aggressivePlay);
                                 
-                                // Immediate attempts
-                                setTimeout(forcePlay, 50);
-                                setTimeout(forcePlay, 200);
-                                setTimeout(forcePlay, 500);
+                                // Continuous play attempts
+                                setTimeout(aggressivePlay, 0);
+                                setTimeout(aggressivePlay, 100);
+                                setTimeout(aggressivePlay, 500);
+                                setTimeout(aggressivePlay, 1000);
                                 
-                                // Intersection Observer to play when in view
+                                // Keep trying every 2 seconds if video is paused
+                                const keepPlaying = setInterval(() => {
+                                  if (video.paused && !video.ended) {
+                                    aggressivePlay();
+                                  }
+                                }, 2000);
+                                
+                                // Intersection Observer with immediate play
                                 const observer = new IntersectionObserver((entries) => {
                                   entries.forEach(entry => {
-                                    if (entry.isIntersecting) {
-                                      forcePlay();
+                                    if (entry.isIntersecting && video.paused) {
+                                      aggressivePlay();
                                     }
                                   });
-                                }, { threshold: 0.3 });
+                                }, { threshold: 0.1 });
                                 
                                 observer.observe(video);
+                                
+                                // Cleanup
+                                return () => {
+                                  clearInterval(keepPlaying);
+                                  observer.disconnect();
+                                };
                               }
                             }}
                             autoPlay
@@ -871,6 +896,7 @@ const Home = () => {
                             muted
                             playsInline
                             controls={false}
+                            preload="auto"
                             className="w-full max-h-[500px] object-contain no-controls"
                             style={{ 
                               pointerEvents: 'none',

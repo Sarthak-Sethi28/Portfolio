@@ -812,7 +812,7 @@ const Home = () => {
                     transition={{ delay: index * 0.2 }}
                     className={`bg-gray-800/50 rounded-lg overflow-hidden border border-transparent hover:border-cyber-accent/30 transition-all duration-300 ${expandedProject === index ? 'bg-gray-800/70' : ''}`}
                   >
-                    {/* Video/Image at the top - ORIGINAL SIZE */}
+                    {/* Video/Image Display - Back to Original Layout */}
                     {(project.videoUrl || project.imageUrl) && (
                       <div className="w-full bg-gray-900/50 border-b-2 border-cyber-accent/20 relative overflow-hidden">
                         {project.videoUrl ? (
@@ -823,8 +823,12 @@ const Home = () => {
                             playsInline
                             controls={false}
                             className="w-full max-h-[500px] object-contain no-controls"
-                            onContextMenu={(e) => e.preventDefault()}
-                            onClick={(e) => e.preventDefault()}
+                            style={{ 
+                              pointerEvents: 'none',
+                              outline: 'none'
+                            }}
+                            onError={() => console.log('Video failed to load:', project.videoUrl)}
+                            onLoadedData={() => console.log('Video loaded:', project.videoUrl)}
                           >
                             <source src={project.videoUrl} type="video/mp4" />
                           </video>
@@ -834,6 +838,8 @@ const Home = () => {
                             alt={`${project.title} preview`}
                             className="w-full max-h-[500px] object-contain"
                             draggable={false}
+                            onError={() => console.log('Image failed to load:', project.imageUrl)}
+                            onLoad={() => console.log('Image loaded:', project.imageUrl)}
                           />
                         )}
                       </div>

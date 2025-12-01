@@ -26,7 +26,5 @@ yarn-error.log*
 .idea/
 .vscode/
 .vercel
-# Large video files - will be uploaded directly to Vercel
-public/assets/projects/videos/*.mp4
-public/assets/projects/videos/*.mov
-public/assets/projects/videos/*.webm
+# Keep original large videos out of git (backup)
+public/assets/projects/videos/*-original.mp4

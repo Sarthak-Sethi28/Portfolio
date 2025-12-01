@@ -817,90 +817,31 @@ const Home = () => {
                       <div className="w-full bg-gray-900/50 border-b-2 border-cyber-accent/20 relative overflow-hidden">
                         {project.videoUrl ? (
                           <video
-                            ref={(video) => {
-                              if (video) {
-                                // Aggressive video setup
-                                video.defaultMuted = true;
-                                video.muted = true;
-                                video.autoplay = true;
-                                video.loop = true;
-                                video.playsInline = true;
-                                video.controls = false;
-                                video.preload = 'auto';
-                                
-                                // Super aggressive autoplay function
-                                const aggressivePlay = async () => {
-                                  try {
-                                    video.currentTime = 0;
-                                    video.muted = true;
-                                    await video.play();
-                                    console.log('✅ Video playing:', project.videoUrl);
-                                  } catch (error) {
-                                    console.log('❌ Autoplay blocked, setting up triggers:', error);
-                                    
-                                    // If autoplay is blocked, try on ANY interaction
-                                    const playOnInteraction = () => {
-                                      video.play().then(() => {
-                                        console.log('✅ Video started after interaction');
-                                      });
-                                    };
-                                    
-                                    // Multiple interaction triggers
-                                    document.addEventListener('click', playOnInteraction, { once: true });
-                                    document.addEventListener('scroll', playOnInteraction, { once: true });
-                                    document.addEventListener('touchstart', playOnInteraction, { once: true });
-                                    document.addEventListener('keydown', playOnInteraction, { once: true });
-                                    window.addEventListener('focus', playOnInteraction, { once: true });
-                                  }
-                                };
-                                
-                                // Try playing on multiple events
-                                video.addEventListener('loadeddata', aggressivePlay);
-                                video.addEventListener('canplay', aggressivePlay);
-                                video.addEventListener('loadedmetadata', aggressivePlay);
-                                video.addEventListener('loadstart', aggressivePlay);
-                                
-                                // Continuous play attempts
-                                setTimeout(aggressivePlay, 0);
-                                setTimeout(aggressivePlay, 100);
-                                setTimeout(aggressivePlay, 500);
-                                setTimeout(aggressivePlay, 1000);
-                                
-                                // Keep trying every 2 seconds if video is paused
-                                const keepPlaying = setInterval(() => {
-                                  if (video.paused && !video.ended) {
-                                    aggressivePlay();
-                                  }
-                                }, 2000);
-                                
-                                // Intersection Observer with immediate play
-                                const observer = new IntersectionObserver((entries) => {
-                                  entries.forEach(entry => {
-                                    if (entry.isIntersecting && video.paused) {
-                                      aggressivePlay();
-                                    }
-                                  });
-                                }, { threshold: 0.1 });
-                                
-                                observer.observe(video);
-                                
-                                // Cleanup
-                                return () => {
-                                  clearInterval(keepPlaying);
-                                  observer.disconnect();
-                                };
-                              }
-                            }}
                             autoPlay
                             loop
                             muted
                             playsInline
                             controls={false}
-                            preload="auto"
-                            className="w-full max-h-[500px] object-contain no-controls"
-                            style={{ 
-                              pointerEvents: 'none',
-                              outline: 'none'
+                            preload="metadata"
+                            className="w-full max-h-[500px] object-contain"
+                            onLoadedData={(e) => {
+                              const video = e.target as HTMLVideoElement;
+                              video.muted = true;
+                              video.play();
+                            }}
+                            onCanPlay={(e) => {
+                              const video = e.target as HTMLVideoElement;
+                              video.play();
+                            }}
+                            onPause={(e) => {
+                              const video = e.target as HTMLVideoElement;
+                              setTimeout(() => video.play(), 100);
+                            }}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              const video = e.target as HTMLVideoElement;
+                              video.play();
                             }}
                           >
                             <source src={project.videoUrl} type="video/mp4" />

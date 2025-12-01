@@ -1,12 +1,16 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import { Github, Linkedin, Twitter, Mail, ChevronUp } from 'lucide-react';
+import { Github, Linkedin, Mail, ChevronUp } from 'lucide-react';
 
 interface SocialLink {
   name: string;
   url: string;
   icon: React.ReactNode;
+}
+
+interface NavLink {
+  name: string;
+  section: string;
 }
 
 const Footer: React.FC = () => {
@@ -24,15 +28,19 @@ const Footer: React.FC = () => {
       icon: <Linkedin size={18} />,
     },
     {
-      name: 'Twitter',
-      url: 'https://twitter.com/sarthaksethi',
-      icon: <Twitter size={18} />,
-    },
-    {
       name: 'Email',
       url: 'mailto:s36sethi@uwaterloo.ca',
       icon: <Mail size={18} />,
     },
+  ];
+
+  const navLinks: NavLink[] = [
+    { name: 'Home', section: 'home' },
+    { name: 'About', section: 'about' },
+    { name: 'Experience', section: 'experience' },
+    { name: 'Projects', section: 'projects' },
+    { name: 'Skills', section: 'skills' },
+    { name: 'Contact', section: 'contact' },
   ];
 
   const scrollToTop = () => {
@@ -40,6 +48,13 @@ const Footer: React.FC = () => {
       top: 0,
       behavior: 'smooth',
     });
+  };
+
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   };
 
   return (
@@ -65,41 +80,31 @@ const Footer: React.FC = () => {
         <div className="flex flex-col md:flex-row justify-between items-center">
           {/* Logo and copyright */}
           <div className="mb-6 md:mb-0">
-            <Link to="/" className="flex items-center group">
+            <button onClick={() => scrollToSection('home')} className="flex items-center group cursor-pointer">
               <span className="font-display text-xl font-bold text-white">
                 S<span className="text-cyber-accent">.</span>Sethi
               </span>
-            </Link>
+            </button>
             <div className="mt-2 text-sm text-gray-400">
               © {currentYear} Sarthak Sethi. All rights reserved.
             </div>
           </div>
           
           {/* Navigation */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-6 md:mb-0">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-8 mb-6 md:mb-0">
             <div>
               <h3 className="text-white font-medium mb-3">Navigation</h3>
               <ul className="space-y-2 text-sm">
-                <li>
-                  <Link to="/" className="text-gray-400 hover:text-cyber-accent transition-colors">
-                    Home
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/about" className="text-gray-400 hover:text-cyber-accent transition-colors">
-                    About
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/projects" className="text-gray-400 hover:text-cyber-accent transition-colors">
-                    Projects
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/contact" className="text-gray-400 hover:text-cyber-accent transition-colors">
-                    Contact
-                  </Link>
-                </li>
+                {navLinks.map((link) => (
+                  <li key={link.section}>
+                    <button 
+                      onClick={() => scrollToSection(link.section)}
+                      className="text-gray-400 hover:text-cyber-accent transition-colors cursor-pointer"
+                    >
+                      {link.name}
+                    </button>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>

@@ -1,133 +1,10 @@
-import React, { useEffect } from 'react';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
-import { AnimatePresence, motion } from 'framer-motion';
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
-import About from './pages/About';
-import Projects from './pages/Projects';
-import Contact from './pages/Contact';
-import SkillversePage from './pages/Skillverse';
-import NotFound from './pages/NotFound';
 import './index.css';
-
-// Wrapper component for AnimatePresence to access location
-const AnimatedRoutes = () => {
-  const location = useLocation();
-  
-  // Scroll to top on route change
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [location.pathname]);
-  
-  // Page transition variants
-  const pageVariants = {
-    initial: {
-      opacity: 0,
-      y: 20,
-    },
-    animate: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: [0.6, 0.05, 0.01, 0.99],
-      },
-    },
-    exit: {
-      opacity: 0,
-      y: -20,
-      transition: {
-        duration: 0.4,
-      },
-    },
-  };
-  
-  return (
-    <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname}>
-        <Route 
-          path="/" 
-          element={
-            <motion.div
-              variants={pageVariants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-            >
-              <Home />
-            </motion.div>
-          } 
-        />
-        <Route 
-          path="/about" 
-          element={
-            <motion.div
-              variants={pageVariants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-            >
-              <About />
-            </motion.div>
-          } 
-        />
-        <Route 
-          path="/projects" 
-          element={
-            <motion.div
-              variants={pageVariants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-            >
-              <Projects />
-            </motion.div>
-          } 
-        />
-        <Route 
-          path="/contact" 
-          element={
-            <motion.div
-              variants={pageVariants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-            >
-              <Contact />
-            </motion.div>
-          } 
-        />
-        <Route 
-          path="/skillverse" 
-          element={
-            <motion.div
-              variants={pageVariants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-            >
-              <SkillversePage />
-            </motion.div>
-          } 
-        />
-        <Route 
-          path="*" 
-          element={
-            <motion.div
-              variants={pageVariants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-            >
-              <NotFound />
-            </motion.div>
-          } 
-        />
-      </Routes>
-    </AnimatePresence>
-  );
-};
 
 const App: React.FC = () => {
   return (
@@ -138,7 +15,32 @@ const App: React.FC = () => {
         
         {/* Main content */}
         <main className="flex-grow">
-          <AnimatedRoutes />
+          <Routes>
+            <Route 
+              path="/" 
+              element={
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.6 }}
+                >
+                  <Home />
+                </motion.div>
+              } 
+            />
+            <Route 
+              path="*" 
+              element={
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.6 }}
+                >
+                  <Home />
+                </motion.div>
+              } 
+            />
+          </Routes>
         </main>
         
         {/* Footer */}

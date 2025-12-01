@@ -603,7 +603,7 @@ const Home = () => {
                     transform: 'translate(-50%, -50%)',
                   }}
                 >
-                  <motion.div
+          <motion.div 
                     animate={{ y: [0, -2, 0] }}
                     transition={{ duration: 0.5, repeat: Infinity, ease: "easeInOut" }}
                     className="flex flex-col items-center gap-1"
@@ -612,15 +612,15 @@ const Home = () => {
                     <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-20 h-40 bg-gradient-to-b from-yellow-400/40 to-transparent blur-2xl pointer-events-none" />
                     
                     {/* Smoke/Steam */}
-                    <motion.div
-                      animate={{
+              <motion.div 
+                animate={{
                         scale: [0, 2],
                         opacity: [0.7, 0],
                         y: [-30, -60],
-                      }}
-                      transition={{
+                }}
+                transition={{
                         duration: 2,
-                        repeat: Infinity,
+                  repeat: Infinity,
                         ease: "easeOut"
                       }}
                       className="absolute -top-8 left-1/2 transform -translate-x-1/2 w-12 h-12 bg-gray-400 rounded-full blur-lg"
@@ -787,11 +787,11 @@ const Home = () => {
                     </motion.div>
                   );
                 })}
-              </div>
-            </motion.div>
+            </div>
+          </motion.div>
           </div>
         </section>
-
+        
         {/* Projects Section */}
         <section id="projects" className="relative py-20 px-4 bg-cyber-dark/30">
           <div className="container mx-auto max-w-6xl">
@@ -818,42 +818,46 @@ const Home = () => {
                     transition={{ delay: index * 0.2 }}
                     className={`bg-gray-800/50 rounded-lg overflow-hidden border border-transparent hover:border-cyber-accent/30 transition-all duration-300 ${expandedProject === index ? 'bg-gray-800/70' : ''}`}
                   >
-                    {/* Video/Image at the top - No controls, seamless loop */}
+                    {/* Video/Image at the top - Clean display */}
                     {(project.videoUrl || project.imageUrl) && (
-                      <div className="w-full bg-gray-900/50 border-b-2 border-cyber-accent/20 relative overflow-hidden select-none">
+                      <div className="w-full bg-gray-900/50 border-b-2 border-cyber-accent/20 relative overflow-hidden">
                         {project.videoUrl ? (
-                          <div className="relative w-full" style={{ pointerEvents: 'none' }}>
+                          /* Seamless looping video - NO controls */
+                          <div className="relative w-full">
                             <video
                               autoPlay
                               loop
                               muted
                               playsInline
                               preload="auto"
-                              disablePictureInPicture
-                              disableRemotePlayback
-                              controls={false}
-                              className="w-full max-h-[500px] object-contain"
+                              className="w-full max-h-[500px] object-contain block"
                               style={{ 
                                 pointerEvents: 'none',
-                                WebkitUserSelect: 'none',
-                                MozUserSelect: 'none',
-                                msUserSelect: 'none',
-                                userSelect: 'none'
+                                outline: 'none'
                               }}
+                              onContextMenu={(e) => e.preventDefault()}
                             >
                               <source src={project.videoUrl} type="video/mp4" />
                             </video>
-                            {/* Overlay to prevent any interaction */}
-                            <div className="absolute inset-0 z-10" style={{ pointerEvents: 'auto' }} onClick={(e) => e.stopPropagation()} />
+                            {/* Invisible overlay to block all interactions */}
+                            <div 
+                              className="absolute inset-0 z-10 cursor-default" 
+                              onClick={(e) => e.stopPropagation()}
+                              onDoubleClick={(e) => e.preventDefault()}
+                            />
                           </div>
-                        ) : project.imageUrl ? (
-                          <img
-                            src={project.imageUrl}
-                            alt={`${project.title} preview`}
-                            className="w-full max-h-[500px] object-contain select-none"
-                            draggable={false}
-                          />
-                        ) : null}
+                        ) : (
+                          /* Static image - NO video element at all */
+                          <div className="relative w-full">
+                            <img
+                              src={project.imageUrl}
+                              alt={`${project.title} preview`}
+                              className="w-full max-h-[500px] object-contain block"
+                              draggable={false}
+                              onContextMenu={(e) => e.preventDefault()}
+                            />
+                          </div>
+                        )}
                       </div>
                     )}
                     

@@ -817,6 +817,26 @@ const Home = () => {
                       <div className="w-full bg-gray-900/50 border-b-2 border-cyber-accent/20 relative overflow-hidden">
                         {project.videoUrl ? (
                           <video
+                            ref={(video) => {
+                              if (video) {
+                                video.defaultMuted = true;
+                                video.muted = true;
+                                video.autoplay = true;
+                                video.loop = true;
+                                video.playsInline = true;
+                                
+                                // Force play when video is ready
+                                const forcePlay = () => {
+                                  video.play().catch(console.log);
+                                };
+                                
+                                video.addEventListener('loadeddata', forcePlay);
+                                video.addEventListener('canplay', forcePlay);
+                                
+                                // Try to play immediately
+                                setTimeout(forcePlay, 100);
+                              }
+                            }}
                             autoPlay
                             loop
                             muted
@@ -827,8 +847,6 @@ const Home = () => {
                               pointerEvents: 'none',
                               outline: 'none'
                             }}
-                            onError={() => console.log('Video failed to load:', project.videoUrl)}
-                            onLoadedData={() => console.log('Video loaded:', project.videoUrl)}
                           >
                             <source src={project.videoUrl} type="video/mp4" />
                           </video>

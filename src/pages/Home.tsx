@@ -123,7 +123,7 @@ const Home = () => {
   const projects = [
     {
       title: 'Muse Sketch Studio',
-      period: 'Toronto, ON',
+      period: '2025',
       description: 'AI-driven design pipeline built with React, TypeScript, and Node.js. Won 1st Place at Replicate AI Hackathon (2025), awarded $1,000 cash and $500 Amazon gift card.',
       technologies: ['React', 'TypeScript', 'Node.js/Express', 'Replicate API', 'Tailwind CSS'],
       points: [
@@ -140,7 +140,7 @@ const Home = () => {
     },
     {
       title: 'Custom Chatbot',
-      period: 'Toronto, ON',
+      period: '2025',
       description: 'AI-powered chatbot with FastAPI backend and React/Tailwind frontend, auto-syncing with Shopify to update product information in real time.',
       technologies: ['FastAPI', 'React', 'Tailwind CSS', 'OpenAI API'],
       points: [
@@ -157,7 +157,7 @@ const Home = () => {
     },
     {
       title: 'Low-Stock Alert System',
-      period: 'Toronto, ON',
+      period: '2025',
       description: 'Automated inventory monitoring system with Python, FastAPI, and SQLAlchemy, parsing Shopify exports to detect low stock levels.',
       technologies: ['FastAPI', 'SQLAlchemy', 'Pandas', 'Gmail SMTP'],
       points: [
@@ -174,7 +174,7 @@ const Home = () => {
     },
     {
       title: 'CarRaksha - Safe Driving System',
-      period: 'India',
+      period: '2023',
       description: 'Collision-prevention system with Arduino sensors, integrating ignition lockout and speed-limiting features.',
       technologies: ['C++', 'Arduino'],
       points: [
@@ -191,7 +191,7 @@ const Home = () => {
     },
     {
       title: 'Personal Portfolio Website',
-      period: 'Waterloo, ON',
+      period: '2024',
       description: 'A responsive personal portfolio using React.js to showcase projects, experience, and skills with fast load times.',
       technologies: ['React.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
       points: [
@@ -208,7 +208,7 @@ const Home = () => {
     },
     {
       title: 'GIM - Guard in Motion',
-      period: 'India',
+      period: '2023',
       description: 'Wearable safety device integrating GPS, motion sensors, and camera for real-time tracking and emergency alerts.',
       technologies: ['Python', 'ML', 'IoT'],
       points: [
@@ -226,7 +226,7 @@ const Home = () => {
     },
     {
       title: 'iMoney - Accessible Finance Manager for the Blind',
-      period: 'India',
+      period: '2024',
       description: 'Accessible personal finance application designed specifically for visually impaired users with voice navigation and screen reader optimization.',
       technologies: ['React', 'Node.js', 'MongoDB', 'Express', 'Web Speech API', 'ARIA'],
       points: [
@@ -819,22 +819,51 @@ const Home = () => {
                           <video
                             ref={(video) => {
                               if (video) {
+                                // Set all properties programmatically
                                 video.defaultMuted = true;
                                 video.muted = true;
                                 video.autoplay = true;
                                 video.loop = true;
                                 video.playsInline = true;
+                                video.controls = false;
                                 
-                                // Force play when video is ready
+                                // Multiple autoplay triggers
                                 const forcePlay = () => {
-                                  video.play().catch(console.log);
+                                  video.currentTime = 0;
+                                  video.play().catch(() => {
+                                    // If blocked, try again on any user interaction
+                                    const startVideo = () => {
+                                      video.play();
+                                      document.removeEventListener('click', startVideo);
+                                      document.removeEventListener('scroll', startVideo);
+                                      document.removeEventListener('touchstart', startVideo);
+                                    };
+                                    document.addEventListener('click', startVideo, { once: true });
+                                    document.addEventListener('scroll', startVideo, { once: true });
+                                    document.addEventListener('touchstart', startVideo, { once: true });
+                                  });
                                 };
                                 
+                                // Try multiple times with different events
                                 video.addEventListener('loadeddata', forcePlay);
                                 video.addEventListener('canplay', forcePlay);
+                                video.addEventListener('loadedmetadata', forcePlay);
                                 
-                                // Try to play immediately
-                                setTimeout(forcePlay, 100);
+                                // Immediate attempts
+                                setTimeout(forcePlay, 50);
+                                setTimeout(forcePlay, 200);
+                                setTimeout(forcePlay, 500);
+                                
+                                // Intersection Observer to play when in view
+                                const observer = new IntersectionObserver((entries) => {
+                                  entries.forEach(entry => {
+                                    if (entry.isIntersecting) {
+                                      forcePlay();
+                                    }
+                                  });
+                                }, { threshold: 0.3 });
+                                
+                                observer.observe(video);
                               }
                             }}
                             autoPlay

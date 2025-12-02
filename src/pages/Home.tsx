@@ -589,7 +589,7 @@ const Home = () => {
                   ))}
                 </div>
                 
-                {/* Animated Full Train */}
+                {/* Seamless 3D Train Animation */}
                 <motion.div
                   className="absolute left-1/2 hidden md:block z-30"
                   style={{
@@ -597,74 +597,209 @@ const Home = () => {
                     transform: 'translate(-50%, -50%)',
                   }}
                 >
-          <motion.div 
-                    animate={{ y: [0, -2, 0] }}
-                    transition={{ duration: 0.5, repeat: Infinity, ease: "easeInOut" }}
-                    className="flex flex-col items-center gap-1"
+                  <motion.div
+                    animate={{ 
+                      y: [0, -3, 0],
+                      rotateX: [0, 1, 0]
+                    }}
+                    transition={{ 
+                      duration: 0.8, 
+                      repeat: Infinity, 
+                      ease: "easeInOut" 
+                    }}
+                    className="relative"
+                    style={{ 
+                      transformStyle: 'preserve-3d',
+                      perspective: '1000px'
+                    }}
                   >
-                    {/* Headlight Beam */}
-                    <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-20 h-40 bg-gradient-to-b from-yellow-400/40 to-transparent blur-2xl pointer-events-none" />
-                    
-                    {/* Smoke/Steam */}
-              <motion.div 
-                animate={{
-                        scale: [0, 2],
-                        opacity: [0.7, 0],
-                        y: [-30, -60],
-                }}
-                transition={{
+                    {/* Dynamic Headlight Beam */}
+                    <motion.div 
+                      className="absolute top-0 left-1/2 transform -translate-x-1/2 pointer-events-none z-50"
+                      animate={{
+                        scaleY: [1, 1.2, 1],
+                        opacity: [0.6, 0.9, 0.6]
+                      }}
+                      transition={{
                         duration: 2,
-                  repeat: Infinity,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                      }}
+                    >
+                      <div className="w-24 h-48 bg-gradient-to-b from-yellow-300/50 via-yellow-400/30 to-transparent blur-2xl" />
+                      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-12 h-32 bg-gradient-to-b from-yellow-200/70 to-transparent blur-xl" />
+          </motion.div>
+          
+                    {/* Realistic Steam/Smoke */}
+          <motion.div 
+                      className="absolute -top-12 left-1/2 transform -translate-x-1/2"
+                      animate={{
+                        scale: [0.5, 2.5, 3],
+                        opacity: [0.8, 0.4, 0],
+                        y: [-20, -80, -120],
+                        x: [0, Math.sin(Date.now() * 0.001) * 10, Math.sin(Date.now() * 0.002) * 20]
+                      }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
                         ease: "easeOut"
                       }}
-                      className="absolute -top-8 left-1/2 transform -translate-x-1/2 w-12 h-12 bg-gray-400 rounded-full blur-lg"
-                    />
+                    >
+                      <div className="w-8 h-8 bg-gray-300 rounded-full blur-md" />
+                      <div className="absolute top-0 left-0 w-6 h-6 bg-gray-400 rounded-full blur-sm" />
+                      <div className="absolute top-1 left-1 w-4 h-4 bg-gray-200 rounded-full blur-xs" />
+                    </motion.div>
                     
-                    {/* Train Engine (Front) */}
-                    <div className="relative w-14 h-20 bg-gradient-to-b from-cyan-400 to-cyan-700 rounded-t-lg border-2 border-cyan-300 shadow-2xl shadow-cyan-500/60">
-                      {/* Chimney */}
-                      <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-gray-700 rounded-t" />
+                    {/* High-Detail Train Engine */}
+              <motion.div 
+                      className="relative"
+                animate={{
+                        rotateY: [0, 2, -2, 0],
+                        rotateZ: [0, 0.5, -0.5, 0]
+                }}
+                transition={{
+                        duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                      }}
+                      style={{ transformStyle: 'preserve-3d' }}
+                    >
+                      {/* Engine Body */}
+                      <div className="relative w-16 h-24 bg-gradient-to-br from-cyan-300 via-cyan-500 to-cyan-800 rounded-t-xl border-3 border-cyan-200 shadow-2xl" 
+                           style={{ 
+                             background: 'linear-gradient(145deg, #67e8f9, #0891b2, #164e63)',
+                             boxShadow: '0 20px 40px rgba(6, 182, 212, 0.6), inset 0 2px 4px rgba(255,255,255,0.3)'
+                           }}>
+                        
+                        {/* Detailed Chimney */}
+                        <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-5 h-6 bg-gradient-to-b from-gray-600 to-gray-800 rounded-t-lg border border-gray-500" />
+                        <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 w-6 h-2 bg-gray-700 rounded-full" />
+                        
+                        {/* Cab Window with Reflection */}
+                        <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-12 h-8 bg-gradient-to-br from-blue-100 via-blue-200 to-blue-300 rounded-lg border-2 border-gray-700 overflow-hidden">
+                          <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-r from-transparent via-white/40 to-transparent" />
+                        </div>
+                        
+                        {/* Dynamic Headlight */}
+                        <motion.div
+                          animate={{ 
+                            opacity: [1, 0.4, 1],
+                            scale: [1, 1.2, 1],
+                            boxShadow: [
+                              '0 0 20px rgba(255, 235, 59, 0.8)',
+                              '0 0 40px rgba(255, 235, 59, 1)',
+                              '0 0 20px rgba(255, 235, 59, 0.8)'
+                            ]
+                          }}
+                          transition={{ duration: 1.5, repeat: Infinity }}
+                          className="absolute bottom-3 left-1/2 transform -translate-x-1/2 w-5 h-5 bg-gradient-radial from-yellow-200 to-yellow-400 rounded-full border-2 border-yellow-500"
+                        />
+                        
+                        {/* Engine Details */}
+                        <div className="absolute top-14 left-2 w-3 h-3 bg-gray-800 rounded-full shadow-inner" />
+                        <div className="absolute top-14 right-2 w-3 h-3 bg-gray-800 rounded-full shadow-inner" />
+                        <div className="absolute top-18 left-1/2 transform -translate-x-1/2 w-8 h-1 bg-gray-700 rounded-full" />
+                        
+                        {/* Side Panels */}
+                        <div className="absolute left-0 top-6 w-1 h-12 bg-cyan-600 rounded-l" />
+                        <div className="absolute right-0 top-6 w-1 h-12 bg-cyan-600 rounded-r" />
+                      </div>
                       
-                      {/* Engine Window */}
-                      <div className="absolute top-3 left-1/2 transform -translate-x-1/2 w-10 h-7 bg-yellow-200/90 rounded border border-gray-600" />
+                      {/* Wheels */}
+                      <div className="absolute -bottom-2 left-2 w-4 h-4 bg-gray-800 rounded-full border-2 border-gray-600">
+                        <motion.div 
+                          animate={{ rotate: [0, 360] }}
+                          transition={{ duration: 0.5, repeat: Infinity, ease: "linear" }}
+                          className="w-full h-full rounded-full border border-gray-500"
+                        >
+                          <div className="absolute top-1/2 left-0 w-full h-px bg-gray-600" />
+                          <div className="absolute left-1/2 top-0 h-full w-px bg-gray-600" />
+                        </motion.div>
+                      </div>
                       
-                      {/* Headlight */}
+                      <div className="absolute -bottom-2 right-2 w-4 h-4 bg-gray-800 rounded-full border-2 border-gray-600">
+                        <motion.div 
+                          animate={{ rotate: [0, 360] }}
+                          transition={{ duration: 0.5, repeat: Infinity, ease: "linear" }}
+                          className="w-full h-full rounded-full border border-gray-500"
+                        >
+                          <div className="absolute top-1/2 left-0 w-full h-px bg-gray-600" />
+                          <div className="absolute left-1/2 top-0 h-full w-px bg-gray-600" />
+                        </motion.div>
+                      </div>
+                    </motion.div>
+                    
+                    {/* Passenger Carriages with 3D Effect */}
+                    {[
+                      { color: 'from-blue-400 to-blue-700', delay: 0.1 },
+                      { color: 'from-purple-400 to-purple-700', delay: 0.2 },
+                      { color: 'from-green-400 to-green-700', delay: 0.3 }
+                    ].map((carriage, i) => (
                       <motion.div
-                        animate={{ opacity: [1, 0.6, 1], scale: [1, 1.1, 1] }}
-                        transition={{ duration: 1, repeat: Infinity }}
-                        className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-yellow-300 rounded-full shadow-lg shadow-yellow-400/80 border-2 border-yellow-500"
-                      />
-                      
-                      {/* Side Details */}
-                      <div className="absolute top-12 left-1 w-2 h-2 bg-gray-800 rounded-full" />
-                      <div className="absolute top-12 right-1 w-2 h-2 bg-gray-800 rounded-full" />
-                    </div>
-                    
-                    {/* Carriage 1 */}
-                    <div className="relative w-14 h-16 bg-gradient-to-b from-blue-500 to-blue-700 border-2 border-blue-400 shadow-xl shadow-blue-500/40">
-                      <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-10 h-5 bg-blue-200/70 rounded border border-gray-600" />
-                      <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-10 h-5 bg-blue-200/70 rounded border border-gray-600" />
-                      <div className="absolute top-1/2 left-0 right-0 h-px bg-gray-600" />
-                    </div>
-                    
-                    {/* Connector */}
-                    <div className="w-1 h-1 bg-gray-600" />
-                    
-                    {/* Carriage 2 */}
-                    <div className="relative w-14 h-16 bg-gradient-to-b from-purple-500 to-purple-700 border-2 border-purple-400 shadow-xl shadow-purple-500/40">
-                      <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-10 h-5 bg-purple-200/70 rounded border border-gray-600" />
-                      <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-10 h-5 bg-purple-200/70 rounded border border-gray-600" />
-                      <div className="absolute top-1/2 left-0 right-0 h-px bg-gray-600" />
-                    </div>
-                    
-                    {/* Connector */}
-                    <div className="w-1 h-1 bg-gray-600" />
-                    
-                    {/* Carriage 3 (Cargo) */}
-                    <div className="relative w-14 h-14 bg-gradient-to-b from-orange-600 to-orange-800 rounded-b-lg border-2 border-orange-400 shadow-xl shadow-orange-500/40">
-                      <div className="absolute top-2 left-2 right-2 bottom-2 border-2 border-orange-300/40 rounded" />
-                      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-xs text-white font-bold">📦</div>
-                    </div>
+                        key={i}
+                        animate={{ 
+                          y: [0, -3, 0],
+                          rotateX: [0, 1, 0]
+                        }}
+                        transition={{ 
+                          duration: 0.8, 
+                          repeat: Infinity, 
+                          ease: "easeInOut",
+                          delay: carriage.delay
+                        }}
+                        className="relative mt-1"
+                        style={{ transformStyle: 'preserve-3d' }}
+                      >
+                        {/* Carriage Body */}
+                        <div className={`relative w-16 h-18 bg-gradient-to-br ${carriage.color} border-2 border-opacity-60 rounded-lg shadow-xl`}
+                             style={{ 
+                               boxShadow: '0 15px 30px rgba(0,0,0,0.4), inset 0 2px 4px rgba(255,255,255,0.2)'
+                             }}>
+                          
+                          {/* Windows */}
+                          <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-12 h-6 bg-gradient-to-br from-blue-100 to-blue-200 rounded border border-gray-600">
+                            <div className="absolute top-0 left-0 w-full h-1/3 bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+                          </div>
+                          
+                          <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 w-12 h-6 bg-gradient-to-br from-blue-100 to-blue-200 rounded border border-gray-600">
+                            <div className="absolute top-0 left-0 w-full h-1/3 bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+                          </div>
+                          
+                          {/* Door Line */}
+                          <div className="absolute top-1/2 left-0 right-0 h-px bg-gray-600 opacity-60" />
+                          
+                          {/* Side Details */}
+                          <div className="absolute left-0 top-1/3 w-1 h-1/3 bg-black bg-opacity-20 rounded-r" />
+                          <div className="absolute right-0 top-1/3 w-1 h-1/3 bg-black bg-opacity-20 rounded-l" />
+                        </div>
+                        
+                        {/* Carriage Wheels */}
+                        <div className="absolute -bottom-2 left-2 w-4 h-4 bg-gray-800 rounded-full border-2 border-gray-600">
+                          <motion.div 
+                            animate={{ rotate: [0, 360] }}
+                            transition={{ duration: 0.5, repeat: Infinity, ease: "linear" }}
+                            className="w-full h-full rounded-full border border-gray-500"
+                          >
+                            <div className="absolute top-1/2 left-0 w-full h-px bg-gray-600" />
+                            <div className="absolute left-1/2 top-0 h-full w-px bg-gray-600" />
+                          </motion.div>
+                        </div>
+                        
+                        <div className="absolute -bottom-2 right-2 w-4 h-4 bg-gray-800 rounded-full border-2 border-gray-600">
+                          <motion.div 
+                            animate={{ rotate: [0, 360] }}
+                            transition={{ duration: 0.5, repeat: Infinity, ease: "linear" }}
+                            className="w-full h-full rounded-full border border-gray-500"
+                          >
+                            <div className="absolute top-1/2 left-0 w-full h-px bg-gray-600" />
+                            <div className="absolute left-1/2 top-0 h-full w-px bg-gray-600" />
+                          </motion.div>
+                        </div>
+                        
+                        {/* Connector */}
+                        <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-gray-600 rounded" />
+                      </motion.div>
+                    ))}
                   </motion.div>
                 </motion.div>
                 

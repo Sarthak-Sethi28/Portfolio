@@ -20,11 +20,11 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="card flex flex-col gap-4 px-6 py-5 md:flex-row md:items-center md:justify-between">
+    <header className="card flex flex-col gap-3 px-6 py-4 md:flex-row md:items-center md:justify-between">
       <div className="min-w-0">
         <div className="flex items-center gap-3">
-          <Monogram />
-          <h1 className="font-serif text-3xl leading-none text-ink md:text-4xl">
+          <Monogram size={36} />
+          <h1 className="font-serif text-3xl leading-none text-ink md:text-[2.4rem]">
             {profile.name}
           </h1>
         </div>
@@ -32,7 +32,7 @@ const Header: React.FC = () => {
           <span className="text-ink">{profile.title}</span>
           <span className="text-faint"> · {profile.school}</span>
         </p>
-        <div className="mt-3 inline-flex items-center gap-2 rounded-full border border-line bg-accent-dim px-3 py-1">
+        <div className="mt-2 inline-flex items-center gap-2 rounded-full border border-line bg-accent-dim px-3 py-1">
           <span className="h-1.5 w-1.5 rounded-full bg-accent animate-live-pulse" />
           <span className="font-mono text-[11px] text-accent-hi">{profile.status}</span>
         </div>

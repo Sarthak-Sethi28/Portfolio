@@ -5,7 +5,7 @@ const prefersReduced =
   window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
 /**
- * Cinematic hero background video (pre-cropped: no letterbox, no watermark).
+ * Cinematic Miami-moon hero video (pre-cropped: no letterbox, no watermark).
  * Reduced-motion users get the still poster frame.
  */
 const HeroBackground: React.FC = () => (
@@ -22,7 +22,7 @@ const HeroBackground: React.FC = () => (
         preload="auto"
         poster="/hero/poster.jpg"
       >
-        <source src="/hero/galaxy-clean.mp4" type="video/mp4" />
+        <source src="/hero/moon.mp4" type="video/mp4" />
       </video>
     )}
   </div>

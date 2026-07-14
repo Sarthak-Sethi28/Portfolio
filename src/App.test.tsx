@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-// The 3D hero uses WebGL, which jsdom can't run — stub it for DOM tests.
-jest.mock('./components/Hero3D', () => ({ __esModule: true, default: () => null }));
+// The hero renders a <video>; stub it for DOM tests.
+jest.mock('./components/HeroBackground', () => ({ __esModule: true, default: () => null }));
 
 beforeAll(() => {
   // minimal fetch stub for jsdom; the Pulse falls back to its snapshot on rejection

@@ -2,8 +2,8 @@ import { render, screen } from '@testing-library/react';
 import Home from '../../pages/Home';
 import { projects } from '../../data/projects';
 
-// The 3D hero uses WebGL, which jsdom can't run — stub it for DOM tests.
-jest.mock('../../components/Hero3D', () => ({
+// The hero renders a <video>; stub it for DOM tests.
+jest.mock('../../components/HeroBackground', () => ({
   __esModule: true,
   default: () => null,
 }));

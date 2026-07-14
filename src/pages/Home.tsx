@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Github, Linkedin, Mail, FileText, Check, ArrowDown } from 'lucide-react';
-import Hero3D from '../components/Hero3D';
+import HeroBackground from '../components/HeroBackground';
 import Monogram from '../components/Monogram';
 import ExperienceColumn from '../components/ExperienceColumn';
 import ProjectsColumn from '../components/ProjectsColumn';
@@ -48,7 +48,7 @@ const Home: React.FC = () => (
   <div className="grid-bg bg-base text-ink">
     {/* ---- 3D HERO ---- */}
     <section className="relative h-screen w-full overflow-hidden">
-      <Hero3D />
+      <HeroBackground />
       {/* left-to-right scrim keeps the name legible over the galaxy */}
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(10,10,11,0.92)_0%,rgba(10,10,11,0.55)_38%,transparent_65%)]" />
 
@@ -59,35 +59,20 @@ const Home: React.FC = () => (
         </div>
 
         <div className="pointer-events-none flex flex-1 flex-col items-start justify-center px-6 text-left md:px-12 lg:px-20">
-          <motion.h1
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: 'easeOut' }}
-            className="font-serif text-5xl leading-[0.95] text-ink drop-shadow-[0_2px_30px_rgba(10,10,11,0.95)] sm:text-6xl md:text-7xl lg:text-8xl"
-          >
+          <h1 className="font-serif text-5xl leading-[0.95] text-ink drop-shadow-[0_2px_30px_rgba(10,10,11,0.95)] sm:text-6xl md:text-7xl lg:text-8xl">
             Sarthak
             <br />
             Sethi
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            className="mt-5 max-w-md font-mono text-sm text-muted md:text-base"
-          >
+          </h1>
+          <p className="mt-5 max-w-md font-mono text-sm text-muted md:text-base">
             <span className="text-ink">{profile.title}</span>
             <br className="sm:hidden" />
             <span className="text-faint"> · {profile.school}</span>
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.7 }}
-            className="mt-5 inline-flex items-center gap-2 rounded-full border border-line bg-base/50 px-3 py-1 backdrop-blur"
-          >
+          </p>
+          <div className="mt-5 inline-flex items-center gap-2 rounded-full border border-line bg-base/50 px-3 py-1 backdrop-blur">
             <span className="h-1.5 w-1.5 rounded-full bg-accent animate-live-pulse" />
             <span className="font-mono text-[11px] text-accent-hi">{profile.status}</span>
-          </motion.div>
+          </div>
         </div>
 
         <div className="flex justify-center pb-8">

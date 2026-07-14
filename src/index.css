@@ -42,6 +42,18 @@ body {
   border-radius: 0.75rem;
 }
 
+/* Reduced-motion / no-WebGL hero fallback: a calm static indigo glow */
+.hero-orb-fallback {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 50% 45%,
+    rgba(99, 102, 241, 0.38),
+    rgba(99, 102, 241, 0.1) 28%,
+    transparent 58%
+  );
+}
+
 /* Faint editorial grid background */
 .grid-bg {
   background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),

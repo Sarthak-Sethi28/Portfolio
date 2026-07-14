@@ -2,6 +2,12 @@ import { render, screen } from '@testing-library/react';
 import Home from '../../pages/Home';
 import { projects } from '../../data/projects';
 
+// The 3D hero uses WebGL, which jsdom can't run — stub it for DOM tests.
+jest.mock('../../components/Hero3D', () => ({
+  __esModule: true,
+  default: () => null,
+}));
+
 // jsdom has no clipboard/fetch; the page should still render fully.
 beforeAll(() => {
   // minimal fetch stub for jsdom; the Pulse falls back to its snapshot on rejection

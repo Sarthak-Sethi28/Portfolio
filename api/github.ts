@@ -15,7 +15,9 @@ export default async function handler(_req: VercelRequest, res: VercelResponse) 
   if (!token) return sendFallback(res);
 
   try {
-    const [gqlRes, eventsRes] = await Promise.all([
+    // Run both concurrently but independently: a failing events fetch must not
+    // discard a good GraphQL result (the recent-commits list is optional).
+    const [gqlSettled, eventsSettled] = await Promise.allSettled([
       fetch('https://api.github.com/graphql', {
         method: 'POST',
         headers: {
@@ -34,13 +36,21 @@ export default async function handler(_req: VercelRequest, res: VercelResponse) 
       }),
     ]);
 
-    if (!gqlRes.ok) return sendFallback(res);
+    if (gqlSettled.status !== 'fulfilled' || !gqlSettled.value.ok) return sendFallback(res);
 
-    const gqlJson = await gqlRes.json();
+    const gqlJson = await gqlSettled.value.json();
     if (gqlJson.errors || !gqlJson.data?.user) return sendFallback(res);
 
-    const events = eventsRes.ok ? await eventsRes.json() : [];
-    const pulse = normalizeGitHub(gqlJson.data, events, USER);
+    let events: unknown[] = [];
+    if (eventsSettled.status === 'fulfilled' && eventsSettled.value.ok) {
+      try {
+        events = await eventsSettled.value.json();
+      } catch {
+        events = [];
+      }
+    }
+
+    const pulse = normalizeGitHub(gqlJson.data, events as never, USER);
 
     res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate=86400');
     return res.status(200).json(pulse);

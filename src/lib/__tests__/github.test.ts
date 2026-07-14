@@ -48,6 +48,20 @@ describe('buildRecent', () => {
     });
   });
 
+  it('skips push events with no commits or a commit missing a sha', () => {
+    const bad = [
+      { type: 'PushEvent', repo: { name: 'a/b' }, created_at: 't', payload: { commits: [] } },
+      {
+        type: 'PushEvent',
+        repo: { name: 'a/c' },
+        created_at: 't',
+        payload: { commits: [{ message: 'no sha' }] },
+      },
+      { type: 'PushEvent', repo: {}, created_at: 't', payload: { commits: [{ sha: 'x', message: 'no repo' }] } },
+    ];
+    expect(buildRecent(bad)).toEqual([]);
+  });
+
   it('caps at 5 and tolerates missing payloads', () => {
     expect(buildRecent([])).toEqual([]);
     expect(buildRecent(undefined)).toEqual([]);

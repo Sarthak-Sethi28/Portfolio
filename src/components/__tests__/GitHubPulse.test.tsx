@@ -55,3 +55,22 @@ test('hides the live dot when serving fallback data', () => {
   render(<GitHubPulse />);
   expect(screen.queryByTestId('live-dot')).not.toBeInTheDocument();
 });
+
+test('shows at most 4 recent commits', () => {
+  const recent = Array.from({ length: 6 }, (_, i) => ({
+    type: 'PushEvent',
+    repo: `Sarthak-Sethi28/repo${i}`,
+    message: `commit ${i}`,
+    url: `https://github.com/Sarthak-Sethi28/repo${i}/commit/s${i}`,
+    at: '2026-07-13T00:00:00Z',
+  }));
+  mockHook.mockReturnValue({ pulse: { ...basePulse, recent }, loading: false });
+  render(<GitHubPulse />);
+  expect(screen.getAllByRole('listitem')).toHaveLength(4);
+});
+
+test('omits the commit list entirely when there are no recent events', () => {
+  mockHook.mockReturnValue({ pulse: { ...basePulse, recent: [] }, loading: false });
+  render(<GitHubPulse />);
+  expect(screen.queryByRole('list')).not.toBeInTheDocument();
+});

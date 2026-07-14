@@ -12,7 +12,7 @@ export const graphqlQuery = (login: string) => `
           }
         }
       }
-      repositories(first: 100, ownerAffiliations: OWNER, privacy: PUBLIC) {
+      repositories(first: 100, ownerAffiliations: OWNER, privacy: PUBLIC, orderBy: { field: STARGAZERS, direction: DESC }) {
         totalCount
         nodes { stargazerCount }
       }
@@ -81,6 +81,8 @@ export function normalizeGitHub(
     }),
   }));
 
+  // Stars are summed over the top-100 most-starred repos (query is ordered by
+  // STARGAZERS desc); stars beyond that are negligible in practice.
   const repoNodes: any[] = Array.isArray(u?.repositories?.nodes) ? u.repositories.nodes : [];
   const totalStars = repoNodes.reduce((sum, r) => sum + Number(r?.stargazerCount ?? 0), 0);
 

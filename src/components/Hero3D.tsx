@@ -1,7 +1,7 @@
 import React, { Suspense, lazy } from 'react';
 import { Canvas } from '@react-three/fiber';
 
-const NeuralCore = lazy(() => import('./three/NeuralCore'));
+const GalaxyScene = lazy(() => import('./three/GalaxyScene'));
 
 const prefersReduced =
   typeof window !== 'undefined' &&
@@ -17,12 +17,12 @@ const Hero3D: React.FC = () => {
     <Canvas
       className="!absolute inset-0"
       dpr={[1, 2]}
-      camera={{ position: [0, 0, 5], fov: 45 }}
+      camera={{ position: [0, 3.5, 12], fov: 50 }}
       gl={{ antialias: true, alpha: true }}
       aria-hidden="true"
     >
       <Suspense fallback={null}>
-        <NeuralCore />
+        <GalaxyScene />
       </Suspense>
     </Canvas>
   );

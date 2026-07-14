@@ -5,59 +5,58 @@ const prefersReduced =
   window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
 /**
- * Miami-moon hero video (pre-cropped: no letterbox/watermark) that is
- * SCRUBBED BY SCROLL: the camera stays static while scrolling drives the clip
- * — the moon slowly comes closer, the tsunami rises, and the same scroll
- * carries the viewer into the content below. Reduced-motion → still poster.
+ * Miami-moon hero video (pre-cropped: no letterbox/watermark).
+ * It autoplays on its own — static camera, the moon slowly descends toward the
+ * surface, the tsunami rises, and water splashes over the lens. When the splash
+ * hits (video ends), the page auto-scrolls once into the content below.
+ * Reduced-motion → still poster, no autoplay, no auto-scroll.
  */
 const HeroBackground: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const rafRef = useRef<number | null>(null);
+  const scrolledOnce = useRef(false);
 
   useEffect(() => {
     if (prefersReduced) return;
-    const video = videoRef.current;
-    const stage = document.getElementById('hero-stage');
-    if (!video || !stage) return;
+    const v = videoRef.current;
+    if (!v) return;
 
-    let duration = 0;
-    const readDuration = () => {
-      duration = Number.isFinite(video.duration) ? video.duration : 0;
+    // Slow the clip so the moon descends gently, and force playback (don't rely
+    // on the autoplay attribute alone).
+    const start = () => {
+      v.playbackRate = 0.75;
+      v.play().catch(() => {});
     };
-    video.addEventListener('loadedmetadata', readDuration);
-    if (video.readyState >= 1) readDuration();
+    v.addEventListener('loadedmetadata', start);
+    if (v.readyState >= 1) start();
 
-    const update = () => {
-      rafRef.current = null;
-      if (!duration) return;
-      const scrollable = stage.offsetHeight - window.innerHeight;
-      const progress =
-        scrollable > 0
-          ? Math.min(Math.max(-stage.getBoundingClientRect().top / scrollable, 0), 1)
-          : 0;
-      const t = progress * (duration - 0.05);
-      if (Number.isFinite(t)) {
-        try {
-          video.currentTime = t;
-        } catch {
-          /* seeking not ready yet */
-        }
+    // When the water splashes (clip ends), carry the viewer into the content —
+    // but only once, and only if they haven't already scrolled away themselves.
+    const onEnded = () => {
+      if (!scrolledOnce.current && window.scrollY < 8) {
+        scrolledOnce.current = true;
+        document.getElementById('content-start')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     };
+    v.addEventListener('ended', onEnded);
 
-    const onScroll = () => {
-      if (rafRef.current == null) rafRef.current = requestAnimationFrame(update);
-    };
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
-    update();
+    // Replay the intro if the hero comes fully back into view.
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting && e.intersectionRatio > 0.9 && v.ended) {
+            v.currentTime = 0;
+            v.play().catch(() => {});
+          }
+        });
+      },
+      { threshold: 0.9 }
+    );
+    io.observe(v);
 
     return () => {
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onScroll);
-      video.removeEventListener('loadedmetadata', readDuration);
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      v.removeEventListener('loadedmetadata', start);
+      v.removeEventListener('ended', onEnded);
+      io.disconnect();
     };
   }, []);
 
@@ -74,6 +73,7 @@ const HeroBackground: React.FC = () => {
       <video
         ref={videoRef}
         className="h-full w-full scale-[1.02] object-cover"
+        autoPlay
         muted
         playsInline
         preload="auto"

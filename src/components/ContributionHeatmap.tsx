@@ -2,10 +2,10 @@ import React from 'react';
 import { PulseWeek } from '../data/types';
 
 const LEVEL_BG: Record<number, string> = {
-  0: 'bg-white/[0.06]',
-  1: 'bg-accent/35',
-  2: 'bg-accent/55',
-  3: 'bg-accent/80',
+  0: 'bg-white/[0.07]',
+  1: 'bg-accent/50',
+  2: 'bg-accent/70',
+  3: 'bg-accent/85',
   4: 'bg-accent',
 };
 
@@ -34,7 +34,7 @@ const ContributionHeatmap: React.FC<Props> = ({ weeks }) => {
   return (
     <div className="w-full">
       {/* Month labels */}
-      <div className="flex">
+      <div className="flex h-4">
         <div className="shrink-0" style={{ width: LABEL_W }} />
         <div className="flex flex-1 gap-[3px]">
           {monthCols.map((label, i) => (
@@ -50,7 +50,7 @@ const ContributionHeatmap: React.FC<Props> = ({ weeks }) => {
       </div>
 
       {/* Grid */}
-      <div className="mt-1.5 flex items-stretch gap-1.5">
+      <div className="mt-2.5 flex items-stretch gap-1.5">
         <div
           className="flex shrink-0 flex-col justify-between py-[1px]"
           style={{ width: LABEL_W }}

@@ -16,7 +16,7 @@ module.exports = {
         line: '#1E1E22',
         ink: '#EDEDEF',
         muted: '#A1A1AA',
-        faint: '#71717A',
+        faint: '#8A8A93', // ~5:1 on #0A0A0B — passes WCAG AA for small text
         accent: '#6366F1',
         'accent-hi': '#818CF8',
         'accent-dim': 'rgba(99, 102, 241, 0.12)',

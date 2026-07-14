@@ -11,16 +11,14 @@ const LEVEL_BG: Record<number, string> = {
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const DAY_LABELS = ['', 'Mon', '', 'Wed', '', 'Fri', ''];
-
-const CELL = 11; // px per day cell (incl. via gap)
+const LABEL_W = 26;
 
 interface Props {
   weeks: PulseWeek[];
 }
 
-/** GitHub-style full-year contribution calendar with month + weekday labels. */
+/** GitHub-style contribution calendar that fills its container width (no dead space). */
 const ContributionHeatmap: React.FC<Props> = ({ weeks }) => {
-  // Month label per week column (shown when the month changes).
   let prevMonth = -1;
   const monthCols = weeks.map((week) => {
     const first = week.days[0]?.date;
@@ -34,67 +32,69 @@ const ContributionHeatmap: React.FC<Props> = ({ weeks }) => {
   });
 
   return (
-    <div className="overflow-x-auto pb-1">
-      <div className="inline-flex flex-col gap-1">
-        {/* Month labels */}
-        <div className="flex" style={{ paddingLeft: 28 }}>
+    <div className="w-full">
+      {/* Month labels */}
+      <div className="flex">
+        <div className="shrink-0" style={{ width: LABEL_W }} />
+        <div className="flex flex-1 gap-[3px]">
           {monthCols.map((label, i) => (
-            <div
-              key={i}
-              className="whitespace-nowrap font-mono text-[10px] text-faint"
-              style={{ width: CELL }}
-            >
-              {label}
+            <div key={i} className="relative min-w-0 flex-1">
+              {label && (
+                <span className="absolute left-0 top-0 whitespace-nowrap font-mono text-[10px] text-faint">
+                  {label}
+                </span>
+              )}
             </div>
           ))}
         </div>
+      </div>
 
-        <div className="flex gap-1">
-          {/* Weekday labels */}
-          <div className="flex flex-col justify-between" style={{ width: 24 }}>
-            {DAY_LABELS.map((d, i) => (
-              <span key={i} className="font-mono text-[9px] leading-none text-faint" style={{ height: CELL - 3 }}>
-                {d}
-              </span>
-            ))}
-          </div>
-
-          {/* Week columns */}
-          <div className="flex gap-[3px]" role="img" aria-label="GitHub contribution graph">
-            {weeks.map((week, wi) => {
-              // place each day in its weekday row (0=Sun … 6=Sat)
-              const slots: (typeof week.days[number] | null)[] = Array(7).fill(null);
-              week.days.forEach((day) => {
-                slots[new Date(day.date).getUTCDay()] = day;
-              });
-              return (
-                <div key={wi} className="flex flex-col gap-[3px]">
-                  {slots.map((day, di) =>
-                    day ? (
-                      <span
-                        key={di}
-                        data-testid="heatmap-cell"
-                        title={`${day.date}: ${day.count} contribution${day.count === 1 ? '' : 's'}`}
-                        className={`h-2 w-2 rounded-[2px] ${LEVEL_BG[day.level]}`}
-                      />
-                    ) : (
-                      <span key={di} className="h-2 w-2" />
-                    )
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Legend */}
-        <div className="flex items-center gap-1.5 self-end pt-1 font-mono text-[9px] text-faint">
-          <span>Less</span>
-          {[0, 1, 2, 3, 4].map((l) => (
-            <span key={l} className={`h-2 w-2 rounded-[2px] ${LEVEL_BG[l]}`} />
+      {/* Grid */}
+      <div className="mt-1.5 flex items-stretch gap-1.5">
+        <div
+          className="flex shrink-0 flex-col justify-between py-[1px]"
+          style={{ width: LABEL_W }}
+        >
+          {DAY_LABELS.map((d, i) => (
+            <span key={i} className="font-mono text-[9px] leading-none text-faint">
+              {d}
+            </span>
           ))}
-          <span>More</span>
         </div>
+
+        <div className="flex flex-1 gap-[3px]" role="img" aria-label="GitHub contribution graph">
+          {weeks.map((week, wi) => {
+            const slots: (typeof week.days[number] | null)[] = Array(7).fill(null);
+            week.days.forEach((day) => {
+              slots[new Date(day.date).getUTCDay()] = day;
+            });
+            return (
+              <div key={wi} className="flex min-w-0 flex-1 flex-col gap-[3px]">
+                {slots.map((day, di) =>
+                  day ? (
+                    <span
+                      key={di}
+                      data-testid="heatmap-cell"
+                      title={`${day.date}: ${day.count} contribution${day.count === 1 ? '' : 's'}`}
+                      className={`aspect-square w-full rounded-[2px] ${LEVEL_BG[day.level]}`}
+                    />
+                  ) : (
+                    <span key={di} className="aspect-square w-full" />
+                  )
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Legend */}
+      <div className="mt-2 flex items-center gap-1.5 self-end pl-[26px] font-mono text-[9px] text-faint">
+        <span className="ml-auto">Less</span>
+        {[0, 1, 2, 3, 4].map((l) => (
+          <span key={l} className={`h-2 w-2 rounded-[2px] ${LEVEL_BG[l]}`} />
+        ))}
+        <span>More</span>
       </div>
     </div>
   );

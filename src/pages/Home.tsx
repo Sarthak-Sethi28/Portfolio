@@ -112,7 +112,7 @@ const Home: React.FC = () => (
       <div className="mt-16">
         <TechMarquee />
       </div>
-      <div className="mt-8 grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]">
+      <div className="mt-8 grid items-start gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.9fr)]">
         <Focus />
         <GitHubPulse />
       </div>

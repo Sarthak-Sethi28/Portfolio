@@ -40,13 +40,21 @@ describe('experience', () => {
 });
 
 describe('projects', () => {
-  it('has exactly 6 projects, each with a metric and >=1 tag', () => {
-    expect(projects).toHaveLength(6);
+  it('has 7 projects, each with a metric and >=1 tag', () => {
+    expect(projects).toHaveLength(7);
     for (const p of projects) {
       expect(p.title.trim()).not.toBe('');
       expect(p.metric.trim()).not.toBe('');
       expect(p.tags.length).toBeGreaterThanOrEqual(1);
     }
+  });
+
+  it('includes Valldor with its a16z + YC accolades', () => {
+    const valldor = projects.find((p) => p.title === 'Valldor');
+    expect(valldor).toBeDefined();
+    expect(valldor?.accolades).toEqual(
+      expect.arrayContaining(['a16z conditional offer', 'YC interview'])
+    );
   });
 
   it('gives award badges only to the two winners', () => {

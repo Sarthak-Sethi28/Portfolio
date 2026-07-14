@@ -31,6 +31,8 @@ export interface Project {
   metric: string;
   tags: string[];
   badge?: Badge;
+  /** Prestige accolades shown as highlighted chips (e.g. "a16z", "YC"). */
+  accolades?: string[];
   url?: string;
   video?: string;
   image?: string;

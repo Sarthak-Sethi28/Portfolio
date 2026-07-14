@@ -2,6 +2,13 @@ import { Project } from './types';
 
 export const projects: Project[] = [
   {
+    title: 'Valldor',
+    year: '2026',
+    metric: 'Autonomous procurement software.',
+    tags: ['AI Agents'],
+    accolades: ['a16z conditional offer', 'YC interview'],
+  },
+  {
     title: 'Muse Sketch Studio',
     year: '2025',
     metric: 'AI design pipeline: prompt → sketch → runway video.',

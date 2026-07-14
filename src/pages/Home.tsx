@@ -5,6 +5,7 @@ import Hero3D from '../components/Hero3D';
 import Monogram from '../components/Monogram';
 import ExperienceColumn from '../components/ExperienceColumn';
 import ProjectsColumn from '../components/ProjectsColumn';
+import TechMarquee from '../components/TechMarquee';
 import GitHubPulse from '../components/GitHubPulse';
 import Footer from '../components/Footer';
 import { profile } from '../data/profile';
@@ -106,6 +107,9 @@ const Home: React.FC = () => (
       <div className="grid gap-x-12 gap-y-16 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
         <ExperienceColumn />
         <ProjectsColumn />
+      </div>
+      <div className="mt-16">
+        <TechMarquee />
       </div>
       <div className="mt-16">
         <GitHubPulse />

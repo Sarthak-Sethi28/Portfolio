@@ -54,7 +54,6 @@
   },
   "devDependencies": {
     "@types/three": "0.161.2",
-    "@vercel/node": "^3.0.0",
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.33",
     "tailwind-scrollbar": "^3.1.0",

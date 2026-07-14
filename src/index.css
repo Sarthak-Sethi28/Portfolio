@@ -54,6 +54,22 @@ body {
   );
 }
 
+/* Rotating tech-stack marquee */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  animation: marquee 38s linear infinite;
+}
+.animate-marquee-rev {
+  animation: marquee 38s linear infinite reverse;
+}
+
 /* Faint editorial grid background */
 .grid-bg {
   background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),

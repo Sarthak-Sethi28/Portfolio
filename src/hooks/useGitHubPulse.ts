@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Pulse } from '../data/types';
+import { fetchPulse } from '../lib/github';
+import { profile } from '../data/profile';
 import fallbackJson from '../data/github-fallback.json';
 
 const fallback = fallbackJson as Pulse;
@@ -11,16 +13,12 @@ export function useGitHubPulse(): { pulse: Pulse | null; loading: boolean } {
   useEffect(() => {
     let cancelled = false;
 
-    fetch('/api/github')
-      .then((r) => {
-        if (!r.ok) throw new Error(`HTTP ${r.status}`);
-        return r.json();
-      })
-      .then((data: Pulse) => {
+    fetchPulse(profile.github)
+      .then((data) => {
         if (!cancelled) setPulse(data);
       })
       .catch(() => {
-        // Offline, local `npm start` (no /api), or endpoint error → committed snapshot.
+        // Offline or the public APIs are unreachable → committed snapshot.
         if (!cancelled) setPulse({ ...fallback, live: false });
       })
       .finally(() => {

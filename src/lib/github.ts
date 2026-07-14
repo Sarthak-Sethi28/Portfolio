@@ -1,27 +1,6 @@
-import { Pulse, PulseEvent, PulseWeek } from '../data/types';
+import { Pulse, PulseDay, PulseWeek } from '../data/types';
 
-/** GraphQL query for the contribution calendar, repo/star counts and followers. */
-export const graphqlQuery = (login: string) => `
-  query {
-    user(login: "${login}") {
-      contributionsCollection {
-        contributionCalendar {
-          totalContributions
-          weeks {
-            contributionDays { date contributionCount }
-          }
-        }
-      }
-      repositories(first: 100, ownerAffiliations: OWNER, privacy: PUBLIC, orderBy: { field: STARGAZERS, direction: DESC }) {
-        totalCount
-        nodes { stargazerCount }
-      }
-      followers { totalCount }
-    }
-  }
-`;
-
-/** Map a raw contribution count to a 0–4 intensity bucket. */
+/** Clamp any contribution count to a 0–4 intensity bucket. */
 export function levelFor(count: number): 0 | 1 | 2 | 3 | 4 {
   if (count <= 0) return 0;
   if (count <= 2) return 1;
@@ -30,75 +9,91 @@ export function levelFor(count: number): 0 | 1 | 2 | 3 | 4 {
   return 4;
 }
 
-interface RawCommit {
-  sha?: string;
-  message?: string;
-}
-interface RawEvent {
-  type?: string;
-  repo?: { name?: string };
-  created_at?: string;
-  payload?: { commits?: RawCommit[] };
+interface RawDay {
+  date: string;
+  count: number;
+  level?: number;
 }
 
-/** Turn public REST events into up to 5 recent push entries (head commit each). */
-export function buildRecent(events: RawEvent[] | undefined | null): PulseEvent[] {
-  if (!Array.isArray(events)) return [];
-  const out: PulseEvent[] = [];
-  for (const e of events) {
-    if (e?.type !== 'PushEvent') continue;
-    const commits = e.payload?.commits;
-    if (!commits || commits.length === 0) continue;
-    const head = commits[commits.length - 1];
-    const repo = e.repo?.name ?? '';
-    if (!repo || !head?.sha) continue;
-    out.push({
-      type: 'PushEvent',
-      repo,
-      message: head.message ?? '',
-      url: `https://github.com/${repo}/commit/${head.sha}`,
-      at: e.created_at ?? '',
-    });
-    if (out.length === 5) break;
+/** Group a flat, date-sorted day list into GitHub-style weeks (new week each Sunday). */
+export function groupWeeks(days: RawDay[]): PulseWeek[] {
+  const weeks: PulseWeek[] = [];
+  let current: PulseDay[] = [];
+  for (const d of days) {
+    const dow = new Date(d.date).getUTCDay();
+    if (dow === 0 && current.length) {
+      weeks.push({ days: current });
+      current = [];
+    }
+    const count = Number(d.count ?? 0);
+    current.push({ date: d.date, count, level: levelFor(count) });
   }
-  return out;
+  if (current.length) weeks.push({ days: current });
+  return weeks;
 }
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-export function normalizeGitHub(
-  gql: any,
-  events: RawEvent[] | undefined | null,
+interface RawContrib {
+  total?: Record<string, number>;
+  contributions?: RawDay[];
+}
+
+/** Normalize the public contribution API + basic stats into a Pulse. Pure/testable. */
+export function normalizePublic(
+  contrib: RawContrib,
+  stats: { publicRepos: number; followers: number; totalStars: number },
   user: string
 ): Pulse {
-  const u = gql?.user ?? {};
-  const calendar = u?.contributionsCollection?.contributionCalendar ?? {};
-  const rawWeeks: any[] = Array.isArray(calendar.weeks) ? calendar.weeks : [];
-
-  const weeks: PulseWeek[] = rawWeeks.map((w) => ({
-    days: (Array.isArray(w?.contributionDays) ? w.contributionDays : []).map((d: any) => {
-      const count = Number(d?.contributionCount ?? 0);
-      return { date: String(d?.date ?? ''), count, level: levelFor(count) };
-    }),
-  }));
-
-  // Stars are summed over the top-100 most-starred repos (query is ordered by
-  // STARGAZERS desc); stars beyond that are negligible in practice.
-  const repoNodes: any[] = Array.isArray(u?.repositories?.nodes) ? u.repositories.nodes : [];
-  const totalStars = repoNodes.reduce((sum, r) => sum + Number(r?.stargazerCount ?? 0), 0);
+  const days = Array.isArray(contrib?.contributions) ? contrib.contributions : [];
+  const weeks = groupWeeks(days);
+  const total =
+    contrib?.total?.lastYear ??
+    days.reduce((sum, d) => sum + Number(d.count ?? 0), 0);
 
   return {
     generatedAt: new Date().toISOString(),
     live: true,
     user,
-    stats: {
-      publicRepos: Number(u?.repositories?.totalCount ?? 0),
-      followers: Number(u?.followers?.totalCount ?? 0),
-      totalStars,
-    },
-    contributions: {
-      total: Number(calendar.totalContributions ?? 0),
-      weeks,
-    },
-    recent: buildRecent(events),
+    stats,
+    contributions: { total, weeks },
+    recent: [],
   };
+}
+
+/**
+ * Fetch a live Pulse from PUBLIC GitHub data — no token required.
+ * Contribution calendar via github-contributions-api; repo/star/follower
+ * counts via the unauthenticated GitHub REST API (best-effort).
+ */
+export async function fetchPulse(user: string): Promise<Pulse> {
+  const contribRes = await fetch(
+    `https://github-contributions-api.jogruber.de/v4/${user}?y=last`
+  );
+  if (!contribRes.ok) throw new Error(`contributions HTTP ${contribRes.status}`);
+  const contrib = (await contribRes.json()) as RawContrib;
+
+  const stats = { publicRepos: 0, followers: 0, totalStars: 0 };
+  try {
+    const [uRes, rRes] = await Promise.all([
+      fetch(`https://api.github.com/users/${user}`),
+      fetch(`https://api.github.com/users/${user}/repos?per_page=100&type=owner&sort=pushed`),
+    ]);
+    if (uRes.ok) {
+      const u = await uRes.json();
+      stats.publicRepos = Number(u.public_repos ?? 0);
+      stats.followers = Number(u.followers ?? 0);
+    }
+    if (rRes.ok) {
+      const repos = await rRes.json();
+      if (Array.isArray(repos)) {
+        stats.totalStars = repos.reduce(
+          (s: number, r: { stargazers_count?: number }) => s + Number(r.stargazers_count ?? 0),
+          0
+        );
+      }
+    }
+  } catch {
+    // stats stay at 0 — the calendar is the important part
+  }
+
+  return normalizePublic(contrib, stats, user);
 }

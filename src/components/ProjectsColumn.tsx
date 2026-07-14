@@ -3,12 +3,12 @@ import { projects } from '../data/projects';
 import ProjectCard from './ProjectCard';
 
 const ProjectsColumn: React.FC = () => (
-  <section aria-label="Projects" className="flex min-h-0 flex-col gap-3">
-    <div className="flex shrink-0 items-baseline justify-between">
+  <section aria-label="Projects">
+    <div className="mb-4 flex items-baseline justify-between">
       <span className="section-label">Projects</span>
       <span className="font-mono text-[10px] text-faint">{projects.length} selected</span>
     </div>
-    <div className="scroll-fade scrollbar-thin scrollbar-thumb-line flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto pr-1">
+    <div className="grid gap-4 sm:grid-cols-2">
       {projects.map((project) => (
         <ProjectCard key={project.title} project={project} />
       ))}

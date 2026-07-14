@@ -18,6 +18,8 @@ export interface Experience {
   /** Metric-led one-liner (proof-forward). */
   metric: string;
   isEducation?: boolean;
+  /** Path to a self-hosted brand logo; falls back to an initial if absent. */
+  logo?: string;
 }
 
 export type Badge = 'Hackathon Winner' | '1st Prize' | 'Internal Tool';
@@ -29,9 +31,9 @@ export interface Project {
   metric: string;
   tags: string[];
   badge?: Badge;
+  /** Prestige accolades shown as highlighted chips (e.g. "a16z", "YC"). */
+  accolades?: string[];
   url?: string;
-  video?: string;
-  image?: string;
 }
 
 // --- GitHub Pulse ---

@@ -1,11 +1,10 @@
 import React from 'react';
-
-const buildDate = process.env.REACT_APP_BUILD_DATE;
+import Webring from './Webring';
 
 const Footer: React.FC = () => (
-  <footer className="flex shrink-0 items-center justify-between px-1 font-mono text-[11px] text-faint">
+  <footer className="flex flex-col-reverse items-center justify-between gap-4 px-1 font-mono text-[11px] text-faint sm:flex-row">
     <span>© 2026 Sarthak Sethi</span>
-    <span>built in React{buildDate ? ` · deployed ${buildDate}` : ''}</span>
+    <Webring />
   </footer>
 );
 

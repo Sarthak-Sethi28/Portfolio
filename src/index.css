@@ -42,20 +42,24 @@ body {
   border-radius: 0.75rem;
 }
 
+/* Rotating tech-stack marquee */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  animation: marquee 38s linear infinite;
+}
+
 /* Faint editorial grid background */
 .grid-bg {
   background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
   background-size: 32px 32px;
-}
-
-/* One-screen lock: only on roomy desktops; short viewports scroll gracefully */
-@media (min-width: 1024px) and (min-height: 820px) {
-  .screen-lock {
-    height: 100vh;
-    min-height: 100vh;
-    overflow: hidden;
-  }
 }
 
 /* Section label — mono, uppercase, tracked (editorial) */
@@ -72,24 +76,6 @@ body {
   outline: 2px solid #818cf8;
   outline-offset: 2px;
   border-radius: 4px;
-}
-
-/* Masked fade for the scrolling projects column */
-.scroll-fade {
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    transparent 0,
-    #000 16px,
-    #000 calc(100% - 16px),
-    transparent 100%
-  );
-  mask-image: linear-gradient(
-    to bottom,
-    transparent 0,
-    #000 16px,
-    #000 calc(100% - 16px),
-    transparent 100%
-  );
 }
 
 @media (prefers-reduced-motion: reduce) {

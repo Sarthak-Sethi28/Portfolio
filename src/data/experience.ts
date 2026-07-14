@@ -7,6 +7,7 @@ export const experience: Experience[] = [
     period: 'Jan – Aug 2026',
     location: 'Waterloo, ON',
     metric: 'Shipping enterprise product features across cross-functional teams.',
+    logo: '/logos/volaris.png',
   },
   {
     company: 'Danier',
@@ -15,6 +16,7 @@ export const experience: Experience[] = [
     location: 'Toronto, ON',
     metric:
       'Built an AI chatbot + automated low-stock alerts — sub-second responses, 100% alert delivery.',
+    logo: '/logos/danier.png',
   },
   {
     company: 'Prompt Solutions',
@@ -30,6 +32,7 @@ export const experience: Experience[] = [
     period: 'Jun – Jul 2023',
     location: 'Remote',
     metric: 'Modernized bug-tracking — −47% load time via optimized Postgres + Docker.',
+    logo: '/logos/nokia.png',
   },
   {
     company: 'University of Waterloo',
@@ -38,5 +41,6 @@ export const experience: Experience[] = [
     location: 'Waterloo, ON',
     metric: 'Honours BCS — focus on systems, AI/ML, and full-stack engineering.',
     isEducation: true,
+    logo: '/logos/waterloo.png',
   },
 ];

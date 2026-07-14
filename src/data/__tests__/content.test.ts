@@ -40,8 +40,8 @@ describe('experience', () => {
 });
 
 describe('projects', () => {
-  it('has 7 projects, each with a metric and >=1 tag', () => {
-    expect(projects).toHaveLength(7);
+  it('has 6 projects, each with a metric and >=1 tag', () => {
+    expect(projects).toHaveLength(6);
     for (const p of projects) {
       expect(p.title.trim()).not.toBe('');
       expect(p.metric.trim()).not.toBe('');

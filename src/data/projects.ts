@@ -45,11 +45,4 @@ export const projects: Project[] = [
     tags: ['FastAPI', 'SQLAlchemy', 'Pandas'],
     badge: 'Internal Tool',
   },
-  {
-    title: 'GIM — Guard in Motion',
-    year: '2023',
-    metric: 'Wearable safety device — GPS + live audio/video streaming.',
-    tags: ['Python', 'ML', 'IoT'],
-    url: 'https://github.com/Sarthak-Sethi28/GIM',
-  },
 ];

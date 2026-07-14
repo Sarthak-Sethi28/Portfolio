@@ -1,21 +1,21 @@
 # sethisarthak.com — portfolio
 
-A refined editorial-dark **one-screen "living dashboard"**: fixed Experience, a scrolling
-Projects column, and a **live GitHub Pulse** (real contribution graph + recent commits) that
-makes the page feel alive.
+A refined editorial-dark portfolio: a cinematic looping **video hero** (Miami-moon), a curated
+Experience + Projects layout, a rotating tech stack, and a **live GitHub calendar** pulling real
+public contribution data — plus the UW CS webring.
 
 ## Stack
 
 - React 18 + TypeScript (Create React App)
 - Tailwind CSS · Framer Motion · lucide-react
 - Self-hosted fonts via `@fontsource` (Fraunces / Inter / JetBrains Mono)
-- One Vercel serverless function (`api/github.ts`) for the live GitHub data
+- Live GitHub data fetched client-side from public APIs (no backend/token)
 
 ## Develop
 
 ```bash
 npm install
-npm start          # http://localhost:3000 — Pulse renders the committed fallback snapshot
+npm start          # http://localhost:3000
 npm test           # jest + React Testing Library
 npm run build      # production build (stamps REACT_APP_BUILD_DATE)
 ```
@@ -37,7 +37,7 @@ The GitHub card pulls **real, public** data client-side — **no token or backen
 src/data/         typed content (profile, experience, projects, stack) + fallback snapshot
 src/lib/          pure GitHub fetch + normalize logic (unit-tested)
 src/hooks/        useGitHubPulse (public fetch -> fallback)
-src/components/   Header, Hero3D, three/GalaxyScene, Experience, Projects, TechMarquee, GitHubPulse
+src/components/   HeroBackground, Experience, Projects, TechMarquee, Focus, GitHubPulse, Webring
 src/pages/Home    composes the hero + content
 docs/superpowers/ design spec + implementation plan
 ```

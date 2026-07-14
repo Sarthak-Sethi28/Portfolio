@@ -25,7 +25,7 @@ const HeroBackground: React.FC = () => {
 
     const start = () => {
       v.playbackRate = 0.75;
-      v.play().catch(() => {});
+      v.play()?.catch(() => {});
     };
     v.addEventListener('loadedmetadata', start);
     if (v.readyState >= 1) start();
@@ -43,7 +43,7 @@ const HeroBackground: React.FC = () => {
     // Restart immediately and fade back in — a seamless, never-stopping loop.
     const onEnded = () => {
       v.currentTime = 0;
-      v.play().catch(() => {});
+      v.play()?.catch(() => {});
       requestAnimationFrame(() => {
         v.style.opacity = '1';
         fading = false;

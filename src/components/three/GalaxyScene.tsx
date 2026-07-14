@@ -136,24 +136,44 @@ function MergingGalaxies() {
 
   useFrame((state) => {
     const t = state.clock.elapsedTime;
-    // Ease the two galaxies from far apart to merged over ~5s.
-    const p = Math.min(t / 5, 1);
-    const ease = 1 - Math.pow(1 - p, 3); // easeOutCubic
-    const gap = (1 - ease) * 7;
+
+    // --- Gravitational inspiral (not a straight slide) ---
+    // Two galaxies fall toward a shared barycentre on decaying orbits: they
+    // swing AROUND each other, accelerate inward as they close (plunge), wind
+    // through ~2 revolutions, flatten onto a common plane, then coalesce.
+    const DUR = 11;
+    const p = Math.min(t / DUR, 1);
+
+    const R0 = 9;
+    const plunge = Math.pow(p, 2.3); // slow approach, fast final plunge (gravity)
+    const R = R0 * (1 - plunge) + 0.18; // separation from centre, never quite 0
+
+    // Angular momentum: winds faster as the pair closes in.
+    const orbit = 2.1 * Math.PI * 2 * Math.pow(p, 1.4);
+    const drift = t * 0.045; // gentle ongoing rotation after the merge
+    const theta = orbit + drift;
+
+    // vertical offset that flattens as they settle onto one plane
+    const y = (1 - p) * 1.7 * Math.sin(orbit * 0.5);
+
+    const cx = Math.cos(theta) * R;
+    const cz = Math.sin(theta) * R;
 
     if (a.current) {
-      a.current.position.set(-gap, (1 - ease) * 2, 0);
-      a.current.rotation.z = (1 - ease) * 0.6;
+      a.current.position.set(cx, y, cz);
+      a.current.rotation.z = (1 - p) * 0.5; // straightens as it merges
     }
     if (b.current) {
-      b.current.position.set(gap, -(1 - ease) * 2, 0);
-      b.current.rotation.z = -(1 - ease) * 0.9;
-      b.current.rotation.x = 0.35;
+      // opposite side of the barycentre, on a tilted orbit
+      b.current.position.set(-cx, -y, -cz);
+      b.current.rotation.z = -(1 - p) * 0.7;
+      b.current.rotation.x = 0.3 + (1 - p) * 0.25;
     }
-    // Cursor parallax + slow drift for the whole system.
+
+    // Cursor parallax + slow cinematic drift of the whole system.
     if (scene.current) {
-      scene.current.rotation.x += ((-state.pointer.y * 0.25 + 0.35) - scene.current.rotation.x) * 0.04;
-      scene.current.rotation.y += ((state.pointer.x * 0.4) - scene.current.rotation.y) * 0.04 + 0.0006;
+      scene.current.rotation.x += (-state.pointer.y * 0.2 + 0.42 - scene.current.rotation.x) * 0.04;
+      scene.current.rotation.y += (state.pointer.x * 0.35 - scene.current.rotation.y) * 0.04 + 0.0004;
     }
   });
 

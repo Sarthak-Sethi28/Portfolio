@@ -2,10 +2,10 @@ import React from 'react';
 import { PulseWeek } from '../data/types';
 
 const LEVEL_BG: Record<number, string> = {
-  0: 'bg-surface-2',
-  1: 'bg-accent/25',
-  2: 'bg-accent/45',
-  3: 'bg-accent/70',
+  0: 'bg-white/[0.06]',
+  1: 'bg-accent/35',
+  2: 'bg-accent/55',
+  3: 'bg-accent/80',
   4: 'bg-accent',
 };
 
@@ -85,6 +85,15 @@ const ContributionHeatmap: React.FC<Props> = ({ weeks }) => {
               );
             })}
           </div>
+        </div>
+
+        {/* Legend */}
+        <div className="flex items-center gap-1.5 self-end pt-1 font-mono text-[9px] text-faint">
+          <span>Less</span>
+          {[0, 1, 2, 3, 4].map((l) => (
+            <span key={l} className={`h-2 w-2 rounded-[2px] ${LEVEL_BG[l]}`} />
+          ))}
+          <span>More</span>
         </div>
       </div>
     </div>

@@ -20,7 +20,7 @@ const GitHubPulse: React.FC = () => {
   const { pulse, loading } = useGitHubPulse();
 
   return (
-    <section aria-label="GitHub activity" className="card p-6">
+    <section aria-label="GitHub activity" className="card flex flex-col p-6">
       <div className="mb-5 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <span className="section-label">GitHub</span>

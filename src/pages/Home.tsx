@@ -6,6 +6,7 @@ import Monogram from '../components/Monogram';
 import ExperienceColumn from '../components/ExperienceColumn';
 import ProjectsColumn from '../components/ProjectsColumn';
 import TechMarquee from '../components/TechMarquee';
+import Focus from '../components/Focus';
 import GitHubPulse from '../components/GitHubPulse';
 import Footer from '../components/Footer';
 import { profile } from '../data/profile';
@@ -111,7 +112,8 @@ const Home: React.FC = () => (
       <div className="mt-16">
         <TechMarquee />
       </div>
-      <div className="mt-16">
+      <div className="mt-8 grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]">
+        <Focus />
         <GitHubPulse />
       </div>
       <div className="mt-12">

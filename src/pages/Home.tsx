@@ -101,14 +101,16 @@ const Home: React.FC = () => (
       </div>
     </section>
 
-    {/* ---- DASHBOARD ---- */}
-    <section className="h-screen w-full">
-      <div className="mx-auto flex h-full max-w-[1400px] flex-col gap-4 px-4 py-6">
-        <div className="grid min-h-0 flex-1 grid-cols-1 gap-4 lg:grid-cols-[minmax(280px,1fr)_minmax(340px,1.25fr)_minmax(300px,1fr)]">
-          <ExperienceColumn />
-          <ProjectsColumn />
-          <GitHubPulse />
-        </div>
+    {/* ---- CONTENT ---- */}
+    <section className="mx-auto max-w-[1400px] px-6 py-20 md:px-12 md:py-28">
+      <div className="grid gap-x-12 gap-y-16 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
+        <ExperienceColumn />
+        <ProjectsColumn />
+      </div>
+      <div className="mt-16">
+        <GitHubPulse />
+      </div>
+      <div className="mt-12">
         <Footer />
       </div>
     </section>

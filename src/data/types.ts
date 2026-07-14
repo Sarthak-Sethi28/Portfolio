@@ -18,6 +18,8 @@ export interface Experience {
   /** Metric-led one-liner (proof-forward). */
   metric: string;
   isEducation?: boolean;
+  /** Path to a self-hosted brand logo; falls back to an initial if absent. */
+  logo?: string;
 }
 
 export type Badge = 'Hackathon Winner' | '1st Prize' | 'Internal Tool';

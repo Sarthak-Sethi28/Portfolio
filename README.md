@@ -1,46 +1,55 @@
-# Getting Started with creatin Portfolio
+# sethisarthak.com — portfolio
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A refined editorial-dark **one-screen "living dashboard"**: fixed Experience, a scrolling
+Projects column, and a **live GitHub Pulse** (real contribution graph + recent commits) that
+makes the page feel alive.
 
-## Available Scripts
+## Stack
 
-In the project directory, you can run:
+- React 18 + TypeScript (Create React App)
+- Tailwind CSS · Framer Motion · lucide-react
+- Self-hosted fonts via `@fontsource` (Fraunces / Inter / JetBrains Mono)
+- One Vercel serverless function (`api/github.ts`) for the live GitHub data
 
-### `npm start`
+## Develop
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```bash
+npm install
+npm start          # http://localhost:3000 — Pulse renders the committed fallback snapshot
+npm test           # jest + React Testing Library
+npm run build      # production build (stamps REACT_APP_BUILD_DATE)
+```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+`npm start` does not run the `/api` function, so the GitHub Pulse shows the committed fallback
+(`src/data/github-fallback.json`, `live: false`). To exercise the live endpoint locally:
 
-### `npm test`
+```bash
+npm i -g vercel
+echo "GITHUB_TOKEN=<token>" > .env.local   # git-ignored
+vercel dev
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## GitHub Pulse
 
-### `npm run build`
+`GET /api/github` reads a server-side `GITHUB_TOKEN` and returns a normalized `Pulse`
+(contribution calendar via GraphQL, repo/star/follower counts, recent public push events).
+On a missing token or any error it serves the committed fallback with `live: false`, so the
+page never breaks. Set `GITHUB_TOKEN` (public read scope only) in the Vercel project settings
+for production; see `.env.example`.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Structure
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+src/data/         typed content (profile, experience, projects) + fallback snapshot
+src/lib/          pure GitHub normalize logic (unit-tested)
+src/hooks/        useGitHubPulse (fetch -> fallback)
+src/components/   Header, Experience, Projects, GitHubPulse, ...
+src/pages/Home    composes the 3-column dashboard
+api/github.ts     Vercel serverless endpoint
+docs/superpowers/ design spec + implementation plan
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Deploy
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Vercel. The CRA build output and the `/api` function deploy together. Set `GITHUB_TOKEN` in the
+project's environment variables.

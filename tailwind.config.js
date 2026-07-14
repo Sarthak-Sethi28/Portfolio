@@ -21,13 +21,6 @@ module.exports = {
         'accent-hi': '#818CF8',
         'accent-dim': 'rgba(99, 102, 241, 0.12)',
       },
-      backgroundImage: {
-        grid: `linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-               linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)`,
-      },
-      backgroundSize: {
-        grid: '32px 32px',
-      },
       keyframes: {
         'live-pulse': {
           '0%, 100%': { opacity: '1', transform: 'scale(1)' },

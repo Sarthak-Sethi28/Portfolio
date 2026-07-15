@@ -1,20 +1,7 @@
 import React from 'react';
-import { Star, Users, FolderGit2 } from 'lucide-react';
 import { useGitHubPulse } from '../hooks/useGitHubPulse';
 import ContributionHeatmap from './ContributionHeatmap';
 import { profile } from '../data/profile';
-
-const Stat: React.FC<{ icon: React.ReactNode; value: number; label: string }> = ({
-  icon,
-  value,
-  label,
-}) => (
-  <span className="flex items-center gap-1.5">
-    <span className="text-accent-hi">{icon}</span>
-    <span className="font-mono text-sm text-ink">{value}</span>
-    <span className="text-xs text-faint">{label}</span>
-  </span>
-);
 
 const GitHubPulse: React.FC = () => {
   const { pulse, loading } = useGitHubPulse();
@@ -45,13 +32,8 @@ const GitHubPulse: React.FC = () => {
         <div data-testid="pulse-skeleton" className="h-28 w-full animate-pulse rounded-lg bg-surface-2" />
       ) : (
         <>
-          <div className="mb-4 flex flex-wrap items-center gap-x-6 gap-y-2">
-            <Stat icon={<FolderGit2 size={14} />} value={pulse.stats.publicRepos} label="repos" />
-            <Stat icon={<Star size={14} />} value={pulse.stats.totalStars} label="stars" />
-            <Stat icon={<Users size={14} />} value={pulse.stats.followers} label="followers" />
-            <span className="ml-auto font-mono text-[11px] text-faint">
-              {pulse.contributions.total} contributions · past year
-            </span>
+          <div className="mb-4 font-mono text-[11px] text-faint">
+            {pulse.contributions.total} contributions · past year
           </div>
           <ContributionHeatmap weeks={pulse.contributions.weeks} />
         </>

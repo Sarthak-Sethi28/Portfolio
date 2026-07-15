@@ -34,7 +34,6 @@ test('renders live data: dot, stats, one cell per contribution day', () => {
   render(<GitHubPulse />);
 
   expect(screen.getByTestId('live-dot')).toBeInTheDocument();
-  expect(screen.getByText('34')).toBeInTheDocument(); // stars
   expect(screen.getByText(/8 contributions/)).toBeInTheDocument();
 
   const totalDays = basePulse.contributions.weeks.reduce((n, w) => n + w.days.length, 0);

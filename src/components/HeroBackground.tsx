@@ -15,6 +15,7 @@ const FADE = 0.8;
  */
 const HeroBackground: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const scrolledOnce = useRef(false);
 
   useEffect(() => {
     if (prefersReduced) return;
@@ -40,8 +41,15 @@ const HeroBackground: React.FC = () => {
     };
     v.addEventListener('timeupdate', onTime);
 
-    // Restart immediately and fade back in — a seamless, never-stopping loop.
+    // On the FIRST splash, carry the viewer into the content once (if they
+    // haven't scrolled away themselves). Then keep looping seamlessly.
     const onEnded = () => {
+      if (!scrolledOnce.current && window.scrollY < 8) {
+        scrolledOnce.current = true;
+        document
+          .getElementById('content-start')
+          ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
       v.currentTime = 0;
       v.play()?.catch(() => {});
       requestAnimationFrame(() => {

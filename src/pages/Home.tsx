@@ -65,9 +65,8 @@ const Home: React.FC = () => (
             Sethi
           </h1>
           <p className="mt-5 max-w-md font-mono text-sm text-muted md:text-base">
-            <span className="text-ink">{profile.title}</span>
-            <br className="sm:hidden" />
-            <span className="text-faint"> · {profile.school}</span>
+            <span className="block text-ink">{profile.title}</span>
+            <span className="mt-1 block text-faint">{profile.school}</span>
           </p>
           <div className="mt-5 inline-flex items-center gap-2 rounded-full border border-line bg-base/50 px-3 py-1 backdrop-blur">
             <span className="h-1.5 w-1.5 rounded-full bg-accent animate-live-pulse" />
